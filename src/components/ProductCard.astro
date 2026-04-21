@@ -1,0 +1,58 @@
+---
+// ProductCard component
+interface Props {
+  name: string;
+  image: string;
+  altText: string;
+  fairPrice: string;
+  normalPrice: string;
+  id: string;
+}
+
+const { name, image, altText, fairPrice, normalPrice, id } = Astro.props;
+---
+
+<article
+  class="product-card bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-400 cursor-pointer group border border-[#F5E9D4]"
+  id={`product-${id}`}
+>
+  <!-- Heart icon -->
+  <div class="flex justify-end mb-2">
+    <button
+      aria-label={`Añadir ${name} a favoritos`}
+      class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-50 transition-colors duration-200 text-[#C4854A] hover:text-[#C0392B]"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Product image -->
+  <div class="flex items-center justify-center h-36 mb-4 overflow-visible">
+    <img
+      src={image}
+      alt={altText}
+      class="h-full w-auto object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-400"
+    />
+  </div>
+
+  <!-- Product info -->
+  <div>
+    <h3 class="font-semibold text-[#3B1A0A] text-sm mb-2 leading-tight">{name}</h3>
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-[#C0392B] font-bold text-lg">Bs. {fairPrice}</span>
+        <span class="block text-xs text-[#C4854A] line-through">Bs. {normalPrice}</span>
+      </div>
+      <button
+        aria-label={`Añadir ${name} a la bolsa de feria`}
+        class="w-9 h-9 rounded-full bg-[#3B1A0A] hover:bg-[#C0392B] text-white flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg hover:scale-110"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,89 @@
+---
+// Navbar component - transparent with scroll blur effect
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4"
+>
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" id="navbar-logo" class="flex items-center gap-2 group">
+      <div class="w-10 h-10 rounded-full bg-[#7B3F1E] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+        <span class="text-[#D4A853] font-bold text-lg" style="font-family: 'Playfair Display', Georgia, serif;">T</span>
+      </div>
+      <div class="leading-tight">
+        <span class="block font-bold text-[#3B1A0A] text-sm tracking-wide" style="font-family: 'Playfair Display', Georgia, serif;">Taboada</span>
+        <span class="block text-xs text-[#C4854A] font-medium tracking-widest uppercase">FEXCO 2026</span>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
+      <a href="#combos" class="text-[#3B1A0A] text-sm font-medium hover:text-[#C0392B] transition-colors duration-200 relative group">
+        Combos de Feria
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C0392B] group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#productos" class="text-[#3B1A0A] text-sm font-medium hover:text-[#C0392B] transition-colors duration-200 relative group">
+        Productos Premium
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C0392B] group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#ubicacion" class="text-[#3B1A0A] text-sm font-medium hover:text-[#C0392B] transition-colors duration-200 relative group">
+        Ubicación Stand
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C0392B] group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#registro" class="text-[#3B1A0A] text-sm font-medium hover:text-[#C0392B] transition-colors duration-200 relative group">
+        Regístrate
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C0392B] group-hover:w-full transition-all duration-300"></span>
+      </a>
+    </nav>
+
+    <!-- Right icons -->
+    <div class="flex items-center gap-4">
+      <!-- Search -->
+      <button id="search-btn" aria-label="Buscar productos" class="p-2 rounded-full hover:bg-[#F5E9D4] transition-colors duration-200">
+        <svg class="w-5 h-5 text-[#3B1A0A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </button>
+
+      <!-- Wishlist -->
+      <button id="wishlist-btn" aria-label="Mis favoritos" class="p-2 rounded-full hover:bg-[#F5E9D4] transition-colors duration-200">
+        <svg class="w-5 h-5 text-[#3B1A0A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+
+      <!-- Bolsa de Feria (Cart) -->
+      <button id="bag-btn" aria-label="Bolsa de feria" class="relative p-2 rounded-full bg-[#C0392B] hover:bg-[#96281B] transition-colors duration-200 group shadow-md">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-[#D4A853] text-[#3B1A0A] text-xs font-bold rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" aria-label="Menú" class="lg:hidden p-2 rounded-full hover:bg-[#F5E9D4] transition-colors duration-200">
+        <svg class="w-5 h-5 text-[#3B1A0A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-[#FDF6EC] border-t border-[#F5E9D4] px-6 py-4 space-y-3">
+    <a href="#combos" class="block text-[#3B1A0A] font-medium hover:text-[#C0392B] transition-colors">Combos de Feria</a>
+    <a href="#productos" class="block text-[#3B1A0A] font-medium hover:text-[#C0392B] transition-colors">Productos Premium</a>
+    <a href="#ubicacion" class="block text-[#3B1A0A] font-medium hover:text-[#C0392B] transition-colors">Ubicación Stand</a>
+    <a href="#registro" class="block text-[#3B1A0A] font-medium hover:text-[#C0392B] transition-colors">Regístrate</a>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

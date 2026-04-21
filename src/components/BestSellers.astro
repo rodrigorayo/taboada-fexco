@@ -1,0 +1,151 @@
+---
+// BestSellers Section — Split section with chocolate dark panel + cream product grid
+import ProductCard from './ProductCard.astro';
+
+const products = [
+  { id: 'trufas-premium', name: 'Trufas Artesanales Premium', image: '/images/product_trufas.png', altText: 'Bolsa de trufas artesanales Taboada', fairPrice: '28', normalPrice: '38' },
+  { id: 'galletas-surtidas', name: 'Galletas Artesanales Surtidas', image: '/images/product_galletas.png', altText: 'Bolsa de galletas artesanales Taboada', fairPrice: '22', normalPrice: '30' },
+  { id: 'pastelito-gourmet', name: 'Pastelito Gourmet de Chocolate', image: '/images/product_pastelito.png', altText: 'Pastelito gourmet de chocolate Taboada', fairPrice: '12', normalPrice: '17' },
+];
+---
+
+<section id="productos" class="relative bg-[#7B3F1E] py-0">
+
+  <div class="relative">
+    <!-- Top wave from hero -->
+    <div class="bg-[#7B3F1E] pt-16 pb-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+          <!-- Left: Dark panel - Story text -->
+          <div class="reveal text-white">
+            <!-- Decorative -->
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-0.5 bg-[#D4A853]"></div>
+              <span class="text-[#D4A853] text-xs font-semibold uppercase tracking-widest">Nuestra Historia</span>
+            </div>
+
+            <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-6" style="font-family: 'Playfair Display', Georgia, serif;">
+              La Dulzura y Calidad de <span class="text-[#D4A853]">Taboada</span> en FEXCO
+            </h2>
+
+            <p class="text-[#F5E9D4] text-base lg:text-lg leading-relaxed mb-8 opacity-90">
+              Más de 15 años elaborando confitería artesanal con ingredientes 
+              seleccionados. Cada trufa, cada galleta y cada pan es resultado de 
+              una receta familiar perfeccionada con amor y dedicación. En FEXCO 2026, 
+              te traemos lo mejor de nuestra tradición con precios exclusivos de feria.
+            </p>
+
+            <!-- Product image on dark background -->
+            <div class="flex justify-center lg:justify-start mb-8">
+              <img
+                src="/images/combo_familiar.png"
+                alt="Combo familiar Taboada con surtido de productos"
+                class="w-56 lg:w-64 drop-shadow-2xl hover:scale-105 transition-transform duration-400"
+              />
+            </div>
+
+            <a
+              href="#combos"
+              id="ver-detalles-btn"
+              class="inline-flex items-center gap-2 border-2 border-[#D4A853] text-[#D4A853] hover:bg-[#D4A853] hover:text-[#3B1A0A] font-semibold px-7 py-3 rounded-full transition-all duration-300"
+            >
+              Ver Detalles
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Right: Best sellers preview (just a teaser here on dark bg) -->
+          <div class="reveal text-white delay-200">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-0.5 bg-[#D4A853]"></div>
+              <span class="text-[#D4A853] text-xs font-semibold uppercase tracking-widest">Estrella del Stand</span>
+            </div>
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Playfair Display', Georgia, serif;">
+              Ingredientes que Hacen la Diferencia
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              {[
+                { icon: '🍫', title: 'Cacao Premium', desc: 'Seleccionado de origen' },
+                { icon: '🧈', title: 'Mantequilla Pura', desc: 'Sin conservantes' },
+                { icon: '🌾', title: 'Harina Artesanal', desc: 'Molienda especial' },
+                { icon: '✨', title: 'Receta Familiar', desc: 'Más de 15 años' },
+              ].map((item) => (
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-colors duration-300">
+                  <div class="text-2xl mb-2">{item.icon}</div>
+                  <div class="font-semibold text-sm">{item.title}</div>
+                  <div class="text-xs text-[#F5E9D4] opacity-80">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wave to cream section -->
+    <div class="overflow-hidden">
+      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full -mb-1">
+        <path d="M0 0C240 80 480 80 720 40C960 0 1200 0 1440 40V80H0V0Z" fill="#FDF6EC"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Cream section - Best sellers grid -->
+  <div class="bg-[#FDF6EC] py-16">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <!-- Section header -->
+      <div class="flex items-center justify-between mb-10 reveal">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-0.5 bg-[#C0392B]"></div>
+            <span class="text-[#C0392B] text-xs font-semibold uppercase tracking-widest">Top ventas</span>
+          </div>
+          <h2 class="text-3xl lg:text-4xl font-bold text-[#3B1A0A]" style="font-family: 'Playfair Display', Georgia, serif;">
+            Lo Más Vendido de la Feria
+          </h2>
+        </div>
+        <!-- Carousel nav -->
+        <div class="hidden sm:flex items-center gap-2">
+          <button id="prev-product" aria-label="Anterior" class="w-10 h-10 rounded-full border-2 border-[#3B1A0A] flex items-center justify-center hover:bg-[#3B1A0A] hover:text-white transition-all duration-200 text-[#3B1A0A]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button id="next-product" aria-label="Siguiente" class="w-10 h-10 rounded-full bg-[#3B1A0A] flex items-center justify-center hover:bg-[#C0392B] transition-all duration-200 text-white">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Products grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal delay-200">
+        {products.map((product) => (
+          <ProductCard
+            id={product.id}
+            name={product.name}
+            image={product.image}
+            altText={product.altText}
+            fairPrice={product.fairPrice}
+            normalPrice={product.normalPrice}
+          />
+        ))}
+      </div>
+
+      <!-- View all link -->
+      <div class="text-center mt-10 reveal delay-300">
+        <a href="#combos" class="inline-flex items-center gap-2 text-[#7B3F1E] font-semibold hover:text-[#C0392B] transition-colors duration-200 group">
+          Ver todos los productos en nuestro stand
+          <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

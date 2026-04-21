@@ -1,0 +1,291 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+---
+<AppLayout title="Credencial Vitalicia · Chocolates Taboada">
+
+<!-- ═══════════════════════════════════════════
+     VISTA 3 — ADULTO MAYOR (Mars-style, mobile-first)
+═══════════════════════════════════════════ -->
+
+<div style="min-height:100svh;background:var(--cream);">
+
+  <!-- ── HEADER with back arrow ── -->
+  <header style="background:rgba(253,248,242,.95);backdrop-filter:blur(12px);border-bottom:1.5px solid #EAD9C5;padding:12px 20px;position:sticky;top:0;z-index:50;">
+    <div style="display:flex;align-items:center;justify-content:space-between;max-width:600px;margin:0 auto;">
+      <a href="/app/comunidad" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--choco-mid);font-weight:700;font-size:14px;-webkit-tap-highlight-color:transparent;">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        Mi comunidad
+      </a>
+      <div style="width:36px;height:36px;border-radius:50%;border:1.5px solid #EAD9C5;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;">
+        <img src="/images/taboada-logo.png" alt="Taboada" style="width:32px;height:32px;object-fit:contain;" />
+      </div>
+    </div>
+  </header>
+
+  <div style="max-width:600px;margin:0 auto;padding:0 20px 40px;">
+
+    <!-- ── HERO HERO: Gold badge + headline ── -->
+    <section class="fu fu1" style="text-align:center;padding:28px 0 24px;">
+      <!-- Gold star badge (Mars product tag style) -->
+      <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#D4A853,#F0C878);border-radius:50px;padding:7px 18px;margin-bottom:18px;box-shadow:0 4px 16px rgba(212,168,83,.35);">
+        <span style="font-size:14px;">🎖️</span>
+        <span style="font-size:12px;font-weight:800;color:var(--choco);letter-spacing:.06em;text-transform:uppercase;">Beneficio Vitalicio</span>
+      </div>
+
+      <h1 style="font-family:var(--font-serif);font-size:clamp(1.7rem,6vw,2.4rem);font-weight:800;color:var(--choco);line-height:1.2;margin-bottom:12px;">
+        Un regalo de por vida<br/>para tu
+        <span style="color:var(--choco-mid);font-style:italic;">adulto mayor</span>
+      </h1>
+
+      <p style="font-size:14px;color:var(--choco-lt);line-height:1.65;max-width:300px;margin:0 auto;">
+        Al registrarlo recibirá una <strong style="color:var(--choco);">Credencial Digital Vitalicia</strong> con 
+        <strong style="color:var(--red);">5% de descuento de por vida</strong> en todas sus compras.
+      </p>
+    </section>
+
+    <!-- ── BENEFIT PILLS ── -->
+    <div class="fu fu2" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:24px;">
+      {[
+        { icon: '♾️', text: '5% de por vida' },
+        { icon: '📱', text: 'Credencial digital' },
+        { icon: '🏪', text: 'Todas las sucursales' },
+      ].map(p => (
+        <div style="display:inline-flex;align-items:center;gap:5px;background:var(--cream-2);border:1.5px solid #EAD9C5;border-radius:50px;padding:7px 14px;">
+          <span style="font-size:14px;">{p.icon}</span>
+          <span style="font-size:12px;font-weight:700;color:var(--choco);">{p.text}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── LIVE CREDENTIAL PREVIEW (Mars product card style) ── -->
+    <div class="fu fu3" style="margin-bottom:24px;">
+      <!-- Gold gradient border trick -->
+      <div style="background:linear-gradient(135deg,#D4A853,#F0C878,#C4854A);padding:2px;border-radius:22px;box-shadow:0 8px 32px rgba(212,168,83,.25);">
+        <div style="background:linear-gradient(135deg,#3B1A0A,#5C2F10);border-radius:20px;padding:20px;position:relative;overflow:hidden;">
+          <!-- Deco -->
+          <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(212,168,83,.08);"></div>
+          <div style="position:absolute;bottom:-8px;left:-8px;font-size:60px;opacity:.06;line-height:1;">🍫</div>
+
+          <div style="position:relative;z-index:1;display:flex;align-items:center;gap:14px;">
+            <!-- Icon -->
+            <div style="width:56px;height:56px;border-radius:16px;border:1.5px solid rgba(212,168,83,.3);background:rgba(212,168,83,.1);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">
+              👴
+            </div>
+            <!-- Info -->
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                <span style="font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;">Credencial Taboada</span>
+                <span style="background:var(--gold);color:var(--choco);font-size:9px;font-weight:900;padding:2px 7px;border-radius:50px;letter-spacing:.05em;">VITALICIO</span>
+              </div>
+              <div id="prev-name" style="font-family:var(--font-serif);font-size:17px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                Nombre del Familiar
+              </div>
+              <div id="prev-rel" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;">
+                Parentesco · FEXCO 2026
+              </div>
+            </div>
+            <!-- Discount badge -->
+            <div style="flex-shrink:0;background:rgba(212,168,83,.15);border:1.5px solid rgba(212,168,83,.35);border-radius:14px;padding:10px 12px;text-align:center;">
+              <div style="font-size:22px;font-weight:900;color:var(--gold);line-height:1;">5%</div>
+              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;">Descuento</div>
+            </div>
+          </div>
+          <!-- ID row -->
+          <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:16px;padding-top:12px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em;">ID Credencial</span>
+            <span id="prev-id" style="font-family:monospace;font-size:12px;color:rgba(255,255,255,.55);font-weight:700;">#TAB-FEXCO-------</span>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:11px;color:#BFA99A;margin-top:8px;">Vista previa · Se actualiza al completar el formulario</p>
+    </div>
+
+    <!-- ── REGISTRATION FORM ── -->
+    <div class="fu fu4 card" style="padding:22px 18px;border-radius:22px;">
+      <div style="font-family:var(--font-serif);font-size:18px;font-weight:800;color:var(--choco);margin-bottom:18px;">
+        Datos del Adulto Mayor
+      </div>
+
+      <form id="senior-form" novalidate style="display:flex;flex-direction:column;gap:14px;">
+        <div class="grid-2">
+          <div class="field">
+            <label for="sr-nombre">Nombre</label>
+            <input type="text" id="sr-nombre" placeholder="Juan" required autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="sr-apellido">Apellido</label>
+            <input type="text" id="sr-apellido" placeholder="García" required autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="sr-nacimiento">Nacimiento</label>
+            <input type="date" id="sr-nacimiento" required />
+          </div>
+          <div class="field">
+            <label for="sr-parentesco">Parentesco</label>
+            <select id="sr-parentesco" required>
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="Abuelo">Abuelo</option>
+              <option value="Abuela">Abuela</option>
+              <option value="Bisabuelo/a">Bisabuelo/a</option>
+              <option value="Tío/a mayor">Tío/a mayor</option>
+              <option value="Otro familiar">Otro familiar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="sr-whatsapp">WhatsApp del familiar <span style="font-weight:500;opacity:.6;">(opcional)</span></label>
+          <div class="prefix-wrap">
+            <span class="prefix">+591</span>
+            <input type="tel" id="sr-whatsapp" class="has-prefix" placeholder="7XXXXXXX" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Terms checkbox -->
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:4px 0;">
+          <input type="checkbox" id="sr-terms" required style="width:18px;height:18px;margin-top:2px;accent-color:var(--choco-mid);flex-shrink:0;cursor:pointer;" />
+          <span style="font-size:12px;color:#8B6347;line-height:1.55;">
+            Confirmo que tengo autorización del familiar para registrar sus datos y gestionar su credencial vitalicia.
+          </span>
+        </label>
+
+        <p id="senior-error" style="display:none;font-size:13px;color:var(--red);font-weight:700;text-align:center;"></p>
+
+        <button type="submit" id="senior-submit" class="btn btn-dark btn-full" style="font-size:16px;padding:17px;margin-top:4px;">
+          <span id="sr-btn-text">Generar Credencial 🎖️</span>
+          <div id="sr-spinner" class="spinner" style="display:none;"></div>
+        </button>
+      </form>
+    </div>
+
+  </div><!-- /inner -->
+
+  <!-- Dark bottom wave -->
+  <svg viewBox="0 0 390 40" fill="none" style="display:block;width:100%;margin-top:32px;">
+    <path d="M0 40 L0 15 Q100 40 200 18 Q300 0 390 24 L390 40 Z" fill="#3B1A0A"/>
+  </svg>
+  <div style="background:var(--choco);padding:14px;text-align:center;">
+    <span style="font-size:11px;color:rgba(255,255,255,.35);">© 2026 Chocolates Taboada · Programa Legado</span>
+  </div>
+
+</div>
+
+<!-- ── SUCCESS BOTTOM SHEET MODAL ── -->
+<div class="modal-bg" id="success-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:54px;margin-bottom:8px;" class="float1">🎖️</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#D4A853,#F0C878);border-radius:50px;padding:6px 16px;margin-bottom:14px;">
+        <span style="font-size:12px;font-weight:800;color:var(--choco);text-transform:uppercase;letter-spacing:.06em;">✅ ¡Registro exitoso!</span>
+      </div>
+      <div style="font-family:var(--font-serif);font-size:22px;font-weight:800;color:var(--choco);margin-bottom:10px;line-height:1.25;">
+        ¡Credencial en proceso!
+      </div>
+      <p style="font-size:13px;color:#8B6347;line-height:1.65;">
+        La <strong style="color:var(--choco);">Credencial Vitalicia</strong> de 
+        <strong id="modal-name" style="color:var(--choco-mid);">tu familiar</strong> 
+        está siendo generada. La enviaremos por WhatsApp en las próximas 24 horas.
+      </p>
+    </div>
+
+    <!-- Mini credential in modal -->
+    <div style="background:linear-gradient(135deg,#3B1A0A,#5C2F10);border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+      <div style="font-size:26px;width:44px;height:44px;border-radius:12px;background:rgba(212,168,83,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">👴</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;">Credencial Taboada</div>
+        <div id="modal-fullname" style="font-size:15px;font-weight:800;color:#fff;font-family:var(--font-serif);">—</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:1px;">5% descuento · De por vida ♾️</div>
+      </div>
+      <div style="flex-shrink:0;width:44px;height:44px;background:rgba(212,168,83,.18);border:1.5px solid rgba(212,168,83,.4);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:18px;font-weight:900;color:var(--gold);line-height:1;">5%</div>
+        <div style="font-size:8px;color:rgba(255,255,255,.4);text-transform:uppercase;">OFF</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="/app/comunidad" class="btn btn-outline btn-full" style="text-decoration:none;border-radius:14px;">
+        Volver a mi comunidad
+      </a>
+      <button onclick="document.getElementById('success-modal').classList.remove('open')" class="btn btn-dark btn-full" style="border-radius:14px;">
+        Entendido 🎉
+      </button>
+    </div>
+  </div>
+</div>
+
+</AppLayout>
+
+<script>
+  // Live preview
+  const srN  = document.getElementById('sr-nombre')     as HTMLInputElement;
+  const srA  = document.getElementById('sr-apellido')   as HTMLInputElement;
+  const srP  = document.getElementById('sr-parentesco') as HTMLSelectElement;
+  const pName = document.getElementById('prev-name')    as HTMLElement;
+  const pRel  = document.getElementById('prev-rel')     as HTMLElement;
+  const pId   = document.getElementById('prev-id')      as HTMLElement;
+
+  const uid = '#TAB-FEXCO-' + Math.random().toString(36).substring(2,8).toUpperCase();
+  pId.textContent = uid;
+
+  function refreshPreview() {
+    const n = srN.value.trim() || 'Nombre';
+    const a = srA.value.trim() || 'Apellido';
+    const rel = srP.options[srP.selectedIndex]?.text || 'Parentesco';
+    pName.textContent = `${n} ${a}`;
+    pRel.textContent = `${rel} · FEXCO 2026`;
+  }
+  [srN, srA, srP].forEach(el => el.addEventListener('input', refreshPreview));
+  srP.addEventListener('change', refreshPreview);
+
+  // Form submit
+  const form    = document.getElementById('senior-form')   as HTMLFormElement;
+  const subBtn  = document.getElementById('senior-submit') as HTMLButtonElement;
+  const btnTxt  = document.getElementById('sr-btn-text')   as HTMLElement;
+  const spinner = document.getElementById('sr-spinner')    as HTMLElement;
+  const errEl   = document.getElementById('senior-error')  as HTMLElement;
+  const modal   = document.getElementById('success-modal') as HTMLElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const n    = srN.value.trim();
+    const a    = srA.value.trim();
+    const rel  = srP.value;
+    const terms = (document.getElementById('sr-terms') as HTMLInputElement).checked;
+
+    if (!n || !a || !rel) {
+      errEl.textContent = 'Completa los campos requeridos.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!terms) {
+      errEl.textContent = 'Debes confirmar la autorización.';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    subBtn.disabled = true;
+    btnTxt.textContent = 'Generando credencial...';
+    spinner.style.display = 'block';
+    await new Promise(r => setTimeout(r, 1900));
+
+    const fullName = `${n} ${a}`;
+    (document.getElementById('modal-name')     as HTMLElement).textContent = fullName;
+    (document.getElementById('modal-fullname') as HTMLElement).textContent = fullName;
+    modal.classList.add('open');
+
+    btnTxt.textContent = 'Generar Credencial 🎖️';
+    spinner.style.display = 'none';
+    subBtn.disabled = false;
+  });
+
+  // Close modal on bg click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('open');
+  });
+</script>
