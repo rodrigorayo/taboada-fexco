@@ -1,4 +1,223 @@
 ---
-// Redirect to main app page (comunidad is now embedded in /app/)
-return Astro.redirect('/app/#zona-excl');
+import AppLayout from '../layouts/AppLayout.astro';
+
+const rewards = [
+  { id:'trufa', title:'Trufa Artesanal', tag:'Regalo VIP', desc:'Una pieza maestra de cacao belga artesanal.', img:'/images/trufa-hero.png' },
+  { id:'choco', title:'Barra Pura', tag:'Exclusivo', desc:'70% cacao de origen amazónico boliviano.', img:'/images/barra-hero.png' },
+  { id:'cupon', title:'Gesto 4%', tag:'Cortesía', desc:'Descuento especial en toda nuestra colección.', img:'/images/cupon-hero.png' },
+  { id:'cupon', title:'Gesto 4%', tag:'Cortesía', desc:'Descuento especial en toda nuestra colección.', img:'/images/cupon-hero.png' },
+];
+
+const combos = [
+  { id:'c1', name:'Combo Familiar', price:'75', img:'/images/port1.png' },
+  { id:'c2', name:'Combo Goloso', price:'45', img:'/images/port1.png' },
+];
 ---
+
+<AppLayout title="Mis Beneficios · Chocolates Taboada">
+
+<style is:global>
+  :root {
+    --oro-viejo: #C4A77D;
+    --beige-seda: #FDF5E6;
+    --cafe-profundo: #1A0D0A;
+    --font-serif: "Playfair Display", serif;
+  }
+
+  body { background-color: var(--cafe-profundo); color: var(--beige-seda); margin: 0; }
+
+  /* ── HEADER FIJO ── */
+  .fixed-header {
+    position: fixed; top: 0; left: 0; width: 100%;
+    padding: 12px 5%; display: flex; justify-content: space-between; align-items: center;
+    z-index: 100; background-color: rgba(26, 13, 10, 0.9);
+    border-bottom: 1px solid rgba(196, 167, 125, 0.2);
+  }
+  .logo-main { height: clamp(30px, 4vw, 45px); filter: brightness(0) invert(1); }
+  .logo-fexco { height: clamp(18px, 3vw, 25px); opacity: 0.8; }
+
+  /* ── SECCIÓN DE BIENVENIDA CON IMAGEN DE FONDO ── */
+  .welcome-container {
+    position: relative;
+    min-height: 100vh;
+    padding: 120px 5% 60px;
+    display: flex;
+    flex-direction: column;
+    /* IMAGEN DE FONDO PORT2 */
+    background-image: 
+      linear-gradient(rgba(26, 13, 10, 0.8), rgba(26, 13, 10, 0.7)), 
+      url('/images/port2.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto elegante al hacer scroll */
+  }
+
+  .welcome-section {
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    width: 100%;
+  }
+
+  .welcome-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--beige-seda);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+  .welcome-text span { color: var(--oro-viejo); font-style: italic; }
+
+  /* ── GRID DE BENEFICIOS ── */
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .benefit-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Cuadrado chueco */
+  .benefit-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--oro-viejo);
+    border-radius: 20px;
+    transform: rotate(0deg);
+    transition: transform 0.4s ease, opacity 0.3s;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .benefit-wrapper:hover::before, .benefit-wrapper.selected::before {
+    transform: rotate(-4deg) scale(1.02);
+    opacity: 1;
+  }
+
+  .benefit-card {
+    background: rgba(255, 255, 255, 0.95); /* Semi transparente */
+    backdrop-filter: blur(10px); /* Efecto cristal */
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .benefit-card h3 { font-family: var(--font-serif); color: var(--cafe-profundo); margin: 15px 0 5px; font-size: 1.6rem; }
+  .benefit-card p { color: #5D4037; font-size: 13.5px; line-height: 1.5; margin-bottom: 25px; }
+  .benefit-card img { max-height: 110px; margin-bottom: 10px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+
+  .btn-claim {
+    width: 100%; padding: 14px; border-radius: 10px;
+    background: var(--cafe-profundo); color: var(--oro-viejo);
+    border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px;
+    transition: 0.3s;
+  }
+  .btn-claim:hover { background: var(--oro-viejo); color: var(--cafe-profundo); }
+
+  /* ── COMBOS SECCIÓN ── */
+  .combos-container {
+    background-color: var(--beige-seda);
+    padding: 100px 5%;
+    border-radius: 50px 50px 0 0;
+    color: var(--cafe-profundo);
+    position: relative;
+    z-index: 2;
+  }
+
+  .combo-card {
+    background: white; border-radius: 30px; padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+  }
+
+  /* ── ADULTO MAYOR ── */
+  .senior-box {
+    background: var(--cafe-profundo);
+    border: 1px solid var(--oro-viejo);
+    padding: 60px 30px;
+    border-radius: 40px;
+    text-align: center;
+    margin: 80px 0;
+    color: var(--beige-seda);
+  }
+</style>
+
+<div class="bene-page">
+  <div class="fixed-header">
+    <img src="/images/logo-taboada.png" class="logo-main" alt="Taboada" />
+    <img src="/images/fexco-logo-secondary.png" class="logo-fexco" alt="FEXCO" />
+  </div>
+
+  <div class="welcome-container">
+    <header class="welcome-section">
+      <div class="welcome-text">
+        Bienvenida a la familia, <br/>
+        <span>Sahian Mariné</span>
+      </div>
+      <p style="font-size: 15px; opacity: 0.9; margin-top: 10px; max-width: 500px;">
+        Tu membresía exclusiva FEXCO 2026 está activa. Elige un obsequio de cortesía para hoy.
+      </p>
+    </header>
+
+    <section class="benefit-grid">
+      {rewards.map(r => (
+        <div class="benefit-wrapper" id={r.id}>
+          <div class="benefit-card">
+            <img src={r.img} alt={r.title} />
+            <span style="font-size: 9px; font-weight: 800; color: var(--oro-viejo); letter-spacing: 0.15em; text-transform: uppercase;">{r.tag}</span>
+            <h3>{r.title}</h3>
+            <p>{r.desc}</p>
+            <button class="btn-claim" onclick=`selectReward('${r.id}')`>Activar Regalo</button>
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+
+  <div class="combos-container">
+    <h2 style="font-family: var(--font-serif); font-size: 3rem; text-align: center; margin-bottom: 50px;">Colección <span>FEXCO</span></h2>
+    
+    <div class="benefit-grid" style="padding:0; margin-bottom: 80px;">
+      {combos.map(c => (
+        <div class="combo-card">
+          <img src={c.img} alt={c.name} style="max-height: 180px; margin-bottom: 20px;" />
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--cafe-profundo);">{c.name}</h3>
+          <div style="font-size: 1.6rem; font-weight: 800; color: var(--oro-viejo); margin-top: 10px;">Bs. {c.price}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="senior-box">
+      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--oro-viejo); margin-bottom: 15px;">¿Tienes algún adulto mayor en tu familia?</h2>
+      <p style="opacity: 0.8; font-size: 14px; max-width: 550px; margin: 0 auto; line-height: 1.6;">
+        Honramos a nuestras raíces. Regístralo para obtener una membresía permanente y descuentos vitalicios en nuestras boutiques de Cochabamba y La Paz.
+      </p>
+      <a href="/senior.astro" class="btn-senior">Registrar Familiar 🎖️</a>
+    </div>
+
+    <footer style="padding: 40px 0; text-align: center; color: var(--cafe-profundo); font-size: 11px; letter-spacing: 0.2em; opacity: 0.6;">
+      © 2026 CHOCOLATES TABOADA · TRADICIÓN DESDE 1903
+    </footer>
+  </div>
+</div>
+
+<script is:inline>
+  function selectReward(id) {
+    document.querySelectorAll('.benefit-wrapper').forEach(el => el.classList.remove('selected'));
+    const active = document.getElementById(id);
+    if(active) active.classList.add('selected');
+    alert("¡Beneficio activado! Muéstralo en caja del stand FEXCO.");
+  }
+</script>
+</AppLayout>
