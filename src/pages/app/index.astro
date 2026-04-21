@@ -2,13 +2,13 @@
 import AppLayout from '../../layouts/AppLayout.astro';
 
 const combos = [
-  { id:'c1', name:'Combo Familiar',     desc:'2 bolsas de trufas belgas + selecta caja de galletas + 2 panes artesanales de masa madre', price:'75', normal:'110', img:'/images/combo_familiar.png',  badge:'Preferido' },
-  { id:'c2', name:'Combo Goloso',       desc:'Edición de trufas premium + galletas gourmet + pastelito artesanal',          price:'45', normal:'65',  img:'/images/combo_goloso.png',    badge:'Más Vendido' },
+  { id:'c1', name:'Combo Familiar',     desc:'2 bolsas de trufas belgas + selecta caja de galletas + 2 panes artesanales de masa madre', price:'75', normal:'110', img:'/images/port1.png',  badge:'Preferido' },
+  { id:'c2', name:'Combo Goloso',       desc:'Edición de trufas premium + galletas gourmet + pastelito artesanal',          price:'45', normal:'65',  img:'/images/port1.png  ',    badge:'Más Vendido' },
   { id:'c3', name:'Combo Regalo FEXCO', desc:'Exclusivo surtido en elegante caja decorativa (Edición Limitada)',     price:'95', normal:'140', img:'/images/combo_regalo.png',    badge:'Edición Limitada' },
 ];
 
 const rewards = [
-  { id:'trufa',     icon:'✧', title:'Trufa Artesanal',  sub:'Obsequio de bienvenida',   tag:'Popular', desc:'Degustación gratuita de nuestra emblemática trufa belga.' },
+  { id:'trufa',    icon:'✧', title:'Trufa Artesanal',  sub:'Obsequio de bienvenida',   tag:'Popular', desc:'Degustación gratuita de nuestra emblemática trufa belga.' },
   { id:'choco-neg', icon:'✧', title:'Chocolate Negro',  sub:'Obsequio exclusivo',       tag:'Premium', desc:'Barra 70% cacao sin azúcar. Exclusivo para miembros.' },
   { id:'cupon2',    icon:'✧', title:'2% Off Black',     sub:'Beneficio mensual',        tag:'Beneficio', desc:'Descuento especial aplicable a todas sus compras x 30 días.' },
 ];
@@ -28,24 +28,26 @@ const sucursales = [
 <style is:global>
   /* ──── BASE PREMIUM ──── */
   body {
-    background-color: #F8F5F1; /* Crema más sofisticado y frío */
+    background-color: #F8F5F1; 
     background-image: radial-gradient(circle at top right, rgba(212,168,83,0.05), transparent 600px);
     overflow-x: hidden;
   }
   
+  /* CONTENEDOR AMPLIO */
   .luxury-wrapper {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
     width: 100%;
+  }
+  @media (min-width: 768px) {
+    .luxury-wrapper { padding: 0 40px; }
   }
 
   /* Text Tools */
   .serif { font-family: var(--font-serif); }
   .gold-text { color: var(--gold); }
   .choco-text { color: var(--choco); }
-  .tracking-wide { letter-spacing: 0.1em; }
-  .tracking-widest { letter-spacing: 0.25em; }
 
   /* ──── HEADER ──── */
   .premium-header {
@@ -54,20 +56,20 @@ const sucursales = [
     justify-content: space-between;
     align-items: center;
   }
+  @media (min-width: 768px) { .premium-header { padding: 40px 0; } }
+
   .header-logo {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    display: flex; align-items: center; gap: 15px;
     text-decoration: none; color: var(--choco);
   }
-  .header-logo img { width: 45px; height: auto; mix-blend-mode: multiply; }
-  .logo-title {
-    font-family: var(--font-serif); font-weight: 800; font-size: 16px; 
-    letter-spacing: 0.15em; text-transform: uppercase; line-height: 1;
-  }
-  .logo-sub { font-size: 9px; font-weight: 600; letter-spacing: 0.3em; color: var(--choco-lt); text-transform: uppercase; }
+  .header-logo img { height: 50px; width: auto; mix-blend-mode: multiply; }
+  @media (min-width: 768px) { .header-logo img { height: 60px; } }
+  
+  .logo-divider { width: 1px; height: 30px; background: #EAD9C5; }
 
-  /* ──── HERO BOUTIQUE ──── */
+  /* ──── HERO BOUTIQUE (AHORA CON REGISTRO) ──── */
   .hero-luxury {
-    padding: 40px 0 60px;
+    padding: 60px 0 100px;
     position: relative;
   }
   .hero-grid {
@@ -75,301 +77,286 @@ const sucursales = [
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 30px;
+    gap: 60px;
   }
-  @media (min-width: 900px) {
-    .hero-grid { flex-direction: row; text-align: left; align-items: center; gap: 60px; }
+  @media (min-width: 1024px) {
+    .hero-grid { flex-direction: row; text-align: left; align-items: flex-start; gap: 80px; padding: 40px 0 100px; }
   }
   
   .hero-title {
-    font-size: clamp(3.2rem, 8vw, 5.5rem);
-    line-height: 1;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 1.05;
     color: var(--choco);
     margin-bottom: 24px;
   }
   .hero-title span { font-style: italic; font-weight: 400; color: var(--choco-mid); }
   
   .hero-desc {
-    font-size: 15px;
+    font-size: 18px;
     color: #6A4433;
     line-height: 1.8;
-    max-width: 480px;
+    max-width: 550px;
     font-weight: 400;
   }
-  @media (max-width: 899px) { .hero-desc { margin: 0 auto; } }
+  @media (max-width: 1023px) { .hero-desc { margin: 0 auto; } }
 
   .hero-visual {
     position: relative;
     width: 100%;
-    max-width: 400px;
-    height: 400px;
+    max-width: 450px;
+    height: 450px;
     margin: 0 auto;
+    position: sticky;
+    top: 100px;
   }
+  @media (min-width: 1024px) {
+    .hero-visual { max-width: 600px; height: 600px; }
+  }
+  
   .hero-visual::before {
-    content: ''; position: absolute; inset: 20px;
+    content: ''; position: absolute; inset: 10px;
     border-radius: 50%; border: 1px dashed rgba(212,168,83,0.4);
     animation: rotate 60s linear infinite;
   }
+  @media (min-width: 1024px) { .hero-visual::before { inset: 40px; } }
   @keyframes rotate { 100% { transform: rotate(360deg); } }
   
   .hero-product-main {
-    position: absolute; top: 15%; left: 0; right: 0; margin: auto;
-    width: 240px; filter: drop-shadow(0 30px 40px rgba(59,26,10,0.15));
+    position: absolute; top: 10%; left: 0; right: 0; margin: auto;
+    width: 300px; filter: drop-shadow(0 30px 40px rgba(59,26,10,0.15));
     z-index: 2;
   }
-  
-  /* ──── VIP CLUB SECTION (Glassmorphism Dark) ──── */
-  .vip-section {
-    background: linear-gradient(145deg, #2A1105 0%, #170902 100%);
-    border-radius: 40px;
-    padding: 60px 30px;
-    margin: 20px 0 80px;
-    box-shadow: 0 40px 60px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-  }
-  @media (min-width: 768px) {
-    .vip-section { padding: 80px 60px; border-radius: 60px; }
-  }
-  .vip-section::before {
-    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-    background: radial-gradient(circle at center, rgba(212,168,83,0.06) 0%, transparent 50%);
-    pointer-events: none;
-  }
+  @media (min-width: 1024px) { .hero-product-main { width: 420px; } }
 
-  .vip-header { text-align: center; margin-bottom: 50px; position: relative; z-index: 2; }
-  .vip-kicker { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.3em; font-weight: 700; margin-bottom: 12px; display: block; }
-  .vip-heading { font-size: clamp(2.2rem, 5vw, 3rem); color: #FDF9F5; margin-bottom: 16px; }
+  /* ──── FORMULARIO DIRECTO EN HERO (BLANCO/CLARO) ──── */
+  .hero-form-box {
+    background: #FFFFFF;
+    border: 1px solid #EAD9C5;
+    border-radius: 24px;
+    padding: 35px 30px;
+    box-shadow: 0 20px 40px rgba(59, 26, 10, 0.04);
+    max-width: 550px;
+    margin-top: 40px;
+    text-align: left;
+  }
+  @media (max-width: 1023px) { .hero-form-box { margin: 40px auto 0; } }
 
-  /* Refined Accordions */
-  .premium-acc {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    margin-bottom: 16px;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .premium-acc.is-open {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(212,168,83,0.3);
-  }
-  .p-acc-head {
-    padding: 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-    color: var(--white); user-select: none; -webkit-tap-highlight-color: transparent;
-  }
-  .p-acc-title { font-size: 16px; font-weight: 600; letter-spacing: 0.05em; display:flex; align-items:center; gap:12px; }
-  .p-acc-icon { font-family: var(--font-serif); font-size: 24px; font-style: italic; color: var(--gold); transition: transform 0.4s; }
-  .premium-acc.is-open .p-acc-icon { transform: rotate(45deg); /* turns + into X essentially if we used +, but we'll use a delicate arrow */ }
-  
-  .p-acc-body {
-    max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .p-acc-inner { padding: 0 24px 30px; }
-
-  /* Premium inputs for dark mode */
-  .lux-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  .lux-field label { font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
-  .lux-field input {
+  .lux-field-light { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; width: 100%; }
+  .lux-field-light label { font-size: 12px; letter-spacing: 0.1em; color: #8F6D59; text-transform: uppercase; font-weight: 700; }
+  .lux-field-light input {
     background: transparent !important;
-    border: none !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 0 !important; color: var(--white) !important; padding: 10px 0 !important; font-size: 16px !important;
-    transition: border-color 0.3s !important; box-shadow: none !important;
+    border: none !important; border-bottom: 2px solid #EAD9C5 !important;
+    border-radius: 0 !important; color: var(--choco) !important; padding: 12px 0 !important; font-size: 18px !important;
+    transition: border-color 0.3s !important; box-shadow: none !important; width: 100%;
   }
-  .lux-field input:focus { border-bottom-color: var(--gold) !important; box-shadow: none !important; }
-  /* fix autofill background in dark */
-  .lux-field input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px #1E0C05 inset; -webkit-text-fill-color: white !important; }
+  .lux-field-light input:focus { border-bottom-color: var(--gold) !important; box-shadow: none !important; outline: none; }
 
-  /* Button Luxury */
-  .btn-luxury {
-    width: 100%; padding: 18px; border-radius: 0; background: var(--white); color: var(--choco);
-    font-family: var(--font); font-weight: 800; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
-    border: none; cursor: pointer; transition: background 0.3s, color 0.3s;
+  .btn-hero {
+    width: 100%; padding: 20px; border-radius: 12px; background: var(--choco); color: var(--white);
+    font-family: var(--font); font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(59,26,10,0.1);
   }
-  .btn-luxury:hover { background: var(--gold); color: var(--white); }
+  .btn-hero:hover { background: var(--gold); transform: translateY(-2px); }
   
   /* ──── REWARDS (AUTH STATE) ──── */
-  #state-unregistered { display: block; position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
-  #state-registered { display: none; position: relative; z-index: 2; }
+  #state-unregistered { display: block; }
+  #state-registered { display: none; }
   .is-auth #state-unregistered { display: none; }
-  .is-auth #state-registered { display: block; }
+  .is-auth #state-registered { display: block; animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ──── COMBOS (BOUTIQUE GALLERY) ──── */
-  .gallery-section { padding: 40px 0 100px; text-align: center; }
+  .gallery-section { padding: 100px 0 140px; text-align: center; }
+  @media (min-width: 1024px) { .gallery-section { padding: 80px 0 140px; } }
   
   .gallery-grid {
-    display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 50px;
+    display: grid; grid-template-columns: 1fr; gap: 50px; margin-top: 60px;
   }
-  @media (min-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; } }
+  @media (min-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; margin-top: 80px; } }
 
   .lux-card {
-    background: transparent;
-    border: none;
-    text-align: center;
-    position: relative;
-    padding: 20px;
-    transition: transform 0.4s;
+    background: transparent; border: none; text-align: center; position: relative;
+    padding: 20px; transition: transform 0.4s;
   }
-  .lux-card:hover { transform: translateY(-10px); }
+  .lux-card:hover { transform: translateY(-15px); }
   
   .lc-img-box {
-    background: #F0E8DD; /* Soft beige */
-    border-radius: 200px 200px 10px 10px; /* Arched window look */
-    height: 320px;
+    background: #F0E8DD; border-radius: 250px 250px 15px 15px; height: 350px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 30px; position: relative;
     box-shadow: inset 0 -20px 40px rgba(59,26,10,0.03), 0 20px 40px rgba(59,26,10,0.06);
   }
-  .lc-img-box img { max-height: 200px; filter: drop-shadow(0 20px 30px rgba(59,26,10,0.2)); transition: transform 0.5s; }
-  .lux-card:hover .lc-img-box img { transform: scale(1.05); }
+  @media (min-width: 900px) { .lc-img-box { height: 420px; margin-bottom: 40px; } }
+  
+  .lc-img-box img { max-height: 240px; filter: drop-shadow(0 25px 35px rgba(59,26,10,0.2)); transition: transform 0.5s; }
+  @media (min-width: 900px) { .lc-img-box img { max-height: 280px; } }
+  .lux-card:hover .lc-img-box img { transform: scale(1.08); }
 
   .lc-badge {
     position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-    font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--choco); border-bottom: 1px solid var(--choco); padding-bottom: 4px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--choco); border-bottom: 2px solid var(--choco); padding-bottom: 6px;
+    white-space: nowrap;
   }
 
-  .lc-title { font-size: 22px; color: var(--choco); margin-bottom: 12px; }
-  .lc-desc { font-size: 13px; color: #8F6D59; line-height: 1.6; margin-bottom: 24px; padding: 0 15px; }
-  .lc-price-box { font-family: var(--font-serif); color: var(--choco); margin-bottom: 24px; }
-  .lc-price { font-size: 28px; font-weight: 800; font-style: italic; }
-  .lc-old { font-size: 14px; color: #B39A86; text-decoration: line-through; margin-right: 12px; }
+  .lc-title { font-size: 26px; color: var(--choco); margin-bottom: 16px; }
+  @media (min-width: 900px) { .lc-title { font-size: 30px; } }
+  
+  .lc-desc { font-size: 15px; color: #8F6D59; line-height: 1.7; margin-bottom: 24px; padding: 0 15px; }
+  .lc-price-box { font-family: var(--font-serif); color: var(--choco); margin-bottom: 30px; }
+  .lc-price { font-size: 32px; font-weight: 800; font-style: italic; }
+  @media (min-width: 900px) { .lc-price { font-size: 38px; } }
+  .lc-old { font-size: 16px; color: #B39A86; text-decoration: line-through; margin-right: 16px; }
   
   .btn-outline-lux {
-    display: inline-block; border: 1px solid var(--choco); border-radius: 50px;
-    padding: 12px 32px; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+    display: inline-block; border: 2px solid var(--choco); border-radius: 50px;
+    padding: 16px 40px; font-size: 12px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--choco); background: transparent; cursor: pointer; transition: all 0.3s;
   }
+  @media (min-width: 900px) { .btn-outline-lux { font-size: 13px; padding: 18px 45px; } }
   .btn-outline-lux:hover { background: var(--choco); color: var(--white); }
 
-  /* ──── SUCURSALES (Minimal Footer Lines) ──── */
+  /* ──── SUCURSALES ──── */
   .stores-section {
     border-top: 1px solid #EAD9C5;
     padding: 80px 0;
     text-align: center;
   }
+  @media (min-width: 1024px) { .stores-section { padding: 120px 0; } }
+  
   .store-grid {
-    display: flex; flex-direction: column; gap: 40px; margin-top: 50px;
-    max-width: 800px; margin-inline: auto;
+    display: flex; flex-direction: column; gap: 60px; margin-top: 60px;
+    max-width: 1000px; margin-inline: auto;
   }
-  @media (min-width: 600px) { .store-grid { flex-direction: row; justify-content: center; gap: 80px; } }
+  @media (min-width: 768px) { .store-grid { flex-direction: row; justify-content: center; gap: 100px; } }
   
   .st-col { text-align: center; }
-  .st-city { font-size: 12px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
-  .st-name { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--choco); margin-bottom: 4px; }
-  .st-dir { font-size: 13px; color: #8F6D59; margin-bottom: 24px; }
+  .st-city { font-size: 14px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; }
+  .st-name { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--choco); margin-bottom: 8px; }
+  .st-dir { font-size: 16px; color: #8F6D59; margin-bottom: 30px; }
 </style>
 
 <div id="page-root">
+<header class="luxury-wrapper premium-header" style="padding-top: 15px; padding-bottom: 15px; position: relative; z-index: 10;">
+  <a href="/" class="header-logo">
+    <img src="/images/logo-taboada.png" alt="Taboada" style="width: 100%; max-width: 200px; height: auto; mix-blend-mode: multiply;" />
+  </a>
+  <div>
+    <img src="/images/fexco-logo-secondary.png" alt="FEXCO" style="height: 28px;" />
+  </div>
+</header>
+
+<div style="position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; background-color: #F8F5F1;">
   
-  <!-- HEADER -->
-  <header class="luxury-wrapper premium-header">
-    <a href="/" class="header-logo">
-      <img src="/images/taboada-logo.png" alt="Taboada" />
-      <span class="logo-title">Taboada</span>
-      <span class="logo-sub">Chocolatier</span>
-    </a>
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;border:1px solid #EAD9C5;padding:6px 16px;border-radius:30px;color:var(--choco-mid);">FEXCO 2026</div>
-  </header>
+  <img src="/images/port2.jpg" alt="Cacao" style="position: absolute; top: 0; right: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0;" />
+  
+  <style>
+    /* 1. EL DEGRADADO SEMITRANSPARENTE */
+    .gradiente-crema {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+      /* En Celular: Semitransparente en toda la pantalla para que el cacao se luzca de fondo */
+      background: linear-gradient(to bottom, rgba(248,245,241,0.85) 0%, rgba(248,245,241,0.5) 80%, transparent 100%);
+    }
+    
+    /* 2. CENTRADO EN CELULAR, A LA IZQUIERDA EN PC */
+    .responsive-hero-content {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 0 10px; /* Margen extra a los lados en celular */
+    }
+    
+    .caja-vacia-pc { display: none; }
 
-  <!-- HERO -->
-  <section class="luxury-wrapper hero-luxury">
-    <div class="hero-grid">
-      <div class="hero-content fu fu1" style="flex:1;">
-        <div style="font-size:10px; font-weight:700; letter-spacing:0.25em; color:var(--gold); margin-bottom:20px; text-transform:uppercase;">Colección de Feria</div>
-        <h1 class="serif hero-title">Arte en<br/><span>Chocolate</span></h1>
-        <p class="hero-desc">15 años de tradición. Una pasión materializada en trufas belgas, galletería de autor y repostería artesanal. Descubre nuestro stand en FEXCO.</p>
-      </div>
-      <div class="fu fu3" style="flex:1;">
-        <div class="hero-visual">
-          <img src="/images/hero_truffle_box.png" alt="Caja Trufas" class="hero-product-main float1" />
-        </div>
-      </div>
-    </div>
-  </section>
+    @media (min-width: 900px) {
+      .gradiente-crema {
+        /* En PC: Se mantiene más sólido a la izquierda para leer bien */
+        background: linear-gradient(to right, rgba(248,245,241,0.95) 35%, rgba(248,245,241,0.6) 55%, transparent 70%);
+      }
+      .responsive-hero-content {
+        align-items: flex-start; text-align: left; padding: 0;
+      }
+      .caja-vacia-pc { display: block; flex: 1; min-height: 450px; }
+      .hero-luxury { padding-bottom: 80px !important; }
+    }
+  </style>
+  <div class="gradiente-crema"></div>
 
-  <!-- VIP CLUB (Dark Smooth Container) -->
-  <section class="luxury-wrapper">
-    <div class="vip-section" id="club">
+  <section class="luxury-wrapper hero-luxury" style="padding-top: 30px; padding-bottom: 15vh; position: relative; z-index: 2;">
+    
+    <div class="hero-grid" style="gap: 20px;">
       
-      <div class="vip-header">
-        <span class="vip-kicker">Le Club Taboada</span>
-        <h2 class="serif vip-heading">Su Pasaporte al Sabor</h2>
-        <p style="font-size:15px; color:rgba(255,255,255,0.6); max-width:400px; margin:0 auto;">Regístrese como cliente exclusivo para descubrir privilegios reservados y obsequios en su próxima visita.</p>
-      </div>
-
-      <!-- NO AUTH STATE -->
-      <div id="state-unregistered">
-        <!-- Accesorios de Formulario Finos -->
-        <div class="premium-acc" id="acc-reg">
-          <div class="p-acc-head" onclick="toggleAcc('reg')">
-            <span class="p-acc-title"><span style="color:var(--gold);font-size:18px;">✦</span> Solicitar Membresía</span>
-            <span class="p-acc-icon">↓</span>
-          </div>
-          <div class="p-acc-body" id="content-reg">
-            <div class="p-acc-inner">
+      <div class="hero-content fu fu1 responsive-hero-content" style="flex:1; width: 100%;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom: 12px;">Orgullo Boliviano en FEXCO</div>
+        
+        <h1 class="serif hero-title" style="margin-bottom: 16px; font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1.1;">El Sabor de<br/><span>Nuestra Historia</span></h1>
+        
+        <p class="hero-desc" style="margin-bottom: 30px; font-size: 15px; line-height: 1.6; max-width: 480px;">Somos la primera fábrica de chocolates de Bolivia. Llevamos generaciones perfeccionando una receta familiar para ofrecerte el chocolate más exquisito e inolvidable del país.</p>
+        
+        <div id="hero-auth-area" style="width: 100%; display: flex; justify-content: center;">
+          
+          <div id="state-unregistered" style="width: 100%; max-width: 480px;">
+            <div class="hero-form-box" style="padding: 30px 25px; margin-top: 10px; position: relative; background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 15px 35px rgba(59,26,10,0.1); border-radius: 24px; text-align: left;">
+              <h3 class="serif" style="font-size: 24px; color: var(--choco); margin-bottom: 6px; text-align: center;">Únete a la Familia Taboada</h3>
+              <p style="font-size: 13px; color: #6A4433; margin-bottom: 24px; text-align: center; font-weight: 500;">Regístrate ahora, sé parte de nuestra dulce comunidad y recibe regalos pensados para ti.</p>
+              
               <form id="form-register">
-                <div style="display:flex; gap:20px; flex-wrap:wrap;">
-                  <div class="lux-field" style="flex:1; min-width:200px;"><label>Nombre</label><input type="text" id="reg-nombre" required /></div>
-                  <div class="lux-field" style="flex:1; min-width:200px;"><label>Apellido</label><input type="text" id="reg-apellido" required /></div>
+                <div class="lux-field-light" style="margin-bottom: 16px;">
+                  <label style="font-size: 10px; color: #6A4433; font-weight: 800;">NOMBRE COMPLETO</label>
+                  <input type="text" id="reg-nombre" placeholder="Ej. Sahian Mariné" required style="padding: 10px 0 !important; font-size: 16px !important; color: var(--choco) !important; border-bottom-color: rgba(106, 68, 51, 0.3) !important;" />
                 </div>
-                <div class="lux-field"><label>Correo Electrónico</label><input type="email" id="reg-correo" required /></div>
-                <div class="lux-field"><label>WhatsApp (Bolivia)</label><div style="display:flex;align-items:flex-end;"><span style="padding-bottom:10px;margin-right:10px;color:rgba(255,255,255,0.4);border-bottom:1px solid rgba(255,255,255,0.1);">+591</span><input type="tel" id="reg-wpp" style="flex:1;" required /></div></div>
-                <div class="lux-field"><label>Contraseña Exclusiva</label><input type="password" id="reg-pass" required /></div>
+                <div class="lux-field-light" style="margin-bottom: 16px;">
+                  <label style="font-size: 10px; color: #6A4433; font-weight: 800;">CORREO ELECTRÓNICO</label>
+                  <input type="email" id="reg-correo" placeholder="correo@gmail.com" required style="padding: 10px 0 !important; font-size: 16px !important; color: var(--choco) !important; border-bottom-color: rgba(106, 68, 51, 0.3) !important;" />
+                </div>
+                <div class="lux-field-light" style="margin-bottom: 24px;">
+                  <label style="font-size: 10px; color: #6A4433; font-weight: 800;">NÚMERO DE WHATSAPP</label>
+                  <input type="tel" id="reg-wpp" placeholder="Ej. 70012345" required style="padding: 10px 0 !important; font-size: 16px !important; color: var(--choco) !important; border-bottom-color: rgba(106, 68, 51, 0.3) !important;" />
+                </div>
                 
-                <button type="submit" class="btn-luxury" style="margin-top:20px;">Desbloquear Privilegios</button>
+                <button type="submit" class="btn-hero" style="padding: 18px; font-size: 14px; margin-top: 0; border-radius: 12px; width: 100%;">Registrarse Ahora</button>
               </form>
             </div>
           </div>
-        </div>
 
-        <div class="premium-acc" id="acc-log">
-          <div class="p-acc-head" onclick="toggleAcc('log')">
-            <span class="p-acc-title">Ya pertenezco al Club</span>
-            <span class="p-acc-icon">↓</span>
-          </div>
-          <div class="p-acc-body" id="content-log">
-            <div class="p-acc-inner">
-              <form id="form-login">
-                <div class="lux-field"><label>Su Correo</label><input type="email" id="log-correo" required /></div>
-                <div class="lux-field"><label>Su Contraseña</label><input type="password" id="log-pass" required /></div>
-                <button type="submit" class="btn-luxury" style="margin-top:20px; background:transparent; border:1px solid var(--gold); color:var(--gold);">Ingresar</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- AUTH STATE -->
-      <div id="state-registered">
-         <div style="text-align:center; padding: 20px 0;">
-            <div id="user-initial" style="width:70px; height:70px; border-radius:50%; border:1px solid var(--gold); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-family:var(--font-serif); font-size:32px; font-style:italic; color:var(--gold);"></div>
-            <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:8px;">Miembro Exclusivo</div>
-            <div id="user-greeting" class="serif" style="font-size:32px; color:#FDF9F5; margin-bottom:40px;"></div>
-            
-            <div style="display:flex; flex-direction:column; gap:16px; max-width:500px; margin:0 auto;">
-              {rewards.map(r => (
-                <div class="rw-card-lux" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px; text-align:left; display:flex; align-items:center; gap:20px; transition:all 0.3s; cursor:pointer;" data-id={r.id}>
-                   <div style="width:50px; height:50px; border-radius:50%; background:rgba(212,168,83,0.1); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:24px;">{r.icon}</div>
-                   <div style="flex:1;">
-                     <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">{r.tag}</div>
-                     <div class="serif" style="font-size:20px; color:var(--white); margin-bottom:4px;">{r.title}</div>
-                     <div style="font-size:12px; color:rgba(255,255,255,0.5);">{r.desc}</div>
-                   </div>
-                   <div class="lux-claim-tag" style="font-size:10px; font-weight:800; background:var(--white); color:var(--choco); padding:8px 16px; border-radius:30px; text-transform:uppercase; letter-spacing:0.1em;">Canjear</div>
+          <div id="state-registered" style="width: 100%; max-width: 480px;">
+             <div class="hero-form-box" style="background: transparent; border: none; box-shadow: none; padding: 0; margin-top: 20px;">
+                <div style="display:flex; flex-direction: column; align-items:center; gap:10px; margin-bottom: 30px; text-align: center;">
+                  <div id="user-initial" style="width:70px; height:70px; border-radius:50%; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--font-serif); font-size:32px; font-style:italic; color:var(--gold); background:rgba(212,168,83,0.15);"></div>
+                  <div>
+                    <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#6A4433; margin-bottom:4px; font-weight: 700;">Miembro Exclusivo</div>
+                    <div id="user-greeting" class="serif" style="font-size:28px; color:var(--choco);"></div>
+                  </div>
                 </div>
-              ))}
-            </div>
-         </div>
+                
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                  {rewards.map(r => (
+                    <div class="rw-card-light" style="background:rgba(255, 255, 255, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px; text-align:left; display:flex; align-items:center; gap:16px; transition:all 0.3s; cursor:pointer; box-shadow: 0 5px 15px rgba(59,26,10,0.05);" data-id={r.id}>
+                       <div style="min-width:45px; height:45px; border-radius:50%; background:rgba(212,168,83,0.15); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:22px;">{r.icon}</div>
+                       <div style="flex:1;">
+                         <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; font-weight: 800;">{r.tag}</div>
+                         <div class="serif" style="font-size:18px; color:var(--choco); margin-bottom:2px;">{r.title}</div>
+                         <div style="font-size:12px; color:#6A4433; line-height:1.4; font-weight: 500;">{r.desc}</div>
+                       </div>
+                       <div class="lux-claim-tag" style="font-size:10px; font-weight:800; background:var(--choco); color:var(--white); padding:8px 14px; border-radius:30px; text-transform:uppercase; letter-spacing:0.1em;">Canjear</div>
+                    </div>
+                  ))}
+                </div>
+             </div>
+          </div>
+          
+        </div>
       </div>
 
+      <div class="caja-vacia-pc"></div>
+      
     </div>
   </section>
-
-  <!-- LUXURY GALLERY (Combos) -->
+</div>
+</div>
   <section class="luxury-wrapper gallery-section">
-    <span style="font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--choco-lt); display:block; margin-bottom:16px;">Exclusivo en FEXCO</span>
-    <h2 class="serif" style="font-size:clamp(2.5rem, 6vw, 4rem); color:var(--choco); margin-bottom:20px;">Ediciones <span>Especiales</span></h2>
+    <span style="font-size:13px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--choco-lt); display:block; margin-bottom:16px;">Exclusivo en FEXCO</span>
+    <h2 class="serif" style="font-size:clamp(2.5rem, 6vw, 4.5rem); color:var(--choco); margin-bottom:20px;">Ediciones <span>Especiales</span></h2>
     
     <div class="gallery-grid">
       {combos.map(c => (
@@ -390,10 +377,9 @@ const sucursales = [
     </div>
   </section>
 
-  <!-- STORE FOOTER (Minimalist) -->
   <section class="luxury-wrapper stores-section">
-    <div style="width:40px; height:1px; background:var(--gold); margin:0 auto 30px;"></div>
-    <h2 class="serif" style="font-size:28px; color:var(--choco);">Nuestras Boutiques</h2>
+    <div style="width:60px; height:2px; background:var(--gold); margin:0 auto 30px;"></div>
+    <h2 class="serif" style="font-size:32px; color:var(--choco);">Nuestras Boutiques</h2>
     
     <div class="store-grid">
       {sucursales.map(s => (
@@ -410,47 +396,29 @@ const sucursales = [
     </div>
   </section>
   
-  <footer style="text-align:center; padding: 40px 20px; font-size:11px; letter-spacing:0.1em; color:#B39A86; text-transform:uppercase; border-top:1px solid #EAD9C5; max-width:800px; margin:0 auto;">
+  <footer class="luxury-wrapper" style="text-align:center; padding: 60px 20px; font-size:12px; letter-spacing:0.15em; color:#B39A86; text-transform:uppercase; border-top:1px solid #EAD9C5; margin-top: 40px;">
     © 2026 Taboada Chocolatier. Todos los derechos reservados.
   </footer>
 
 </div>
 
-<div class="toast" id="toast" style="background:#170902; color:var(--gold); border:1px solid rgba(212,168,83,0.3);"><span id="toast-msg"></span></div>
+<div class="toast" id="toast" style="background:var(--choco); color:var(--white); border:1px solid rgba(212,168,83,0.5); padding: 16px 24px; font-size: 16px; font-weight: 600;"><span id="toast-msg"></span></div>
 
 </AppLayout>
 
 <script>
   const root = document.getElementById('page-root')!;
-  
-  // -- ACCORDION --
-  const accordions = {
-    reg: { box: document.getElementById('acc-reg')!, content: document.getElementById('content-reg')! },
-    log: { box: document.getElementById('acc-log')!, content: document.getElementById('content-log')! }
-  };
-
-  (window as any).toggleAcc = function(key: 'reg' | 'log') {
-    const isOpen = accordions[key].box.classList.contains('is-open');
-    Object.values(accordions).forEach(acc => {
-      acc.box.classList.remove('is-open');
-      acc.content.style.maxHeight = '0px';
-    });
-    if (!isOpen) {
-      accordions[key].box.classList.add('is-open');
-      accordions[key].content.style.maxHeight = accordions[key].content.scrollHeight + "px";
-    }
-  };
-
-  // Open first by default
-  setTimeout(() => { if(document.getElementById('acc-reg')) (window as any).toggleAcc('reg'); }, 600);
 
   // -- AUTH FLOW --
   function applyAuth(nombre: string) {
     root.classList.add('is-auth');
     const ini = document.getElementById('user-initial');
     const grt = document.getElementById('user-greeting');
-    if(ini) ini.textContent = nombre.charAt(0).toUpperCase();
-    if(grt) grt.innerHTML = `Bienvenida, <span>${nombre}</span>`;
+    
+    const primerNombre = nombre.split(' ')[0] || nombre;
+
+    if(ini) ini.textContent = primerNombre.charAt(0).toUpperCase();
+    if(grt) grt.innerHTML = `Bienvenidaaaaa, <span>${primerNombre}</span>`;
     initLuxRewards();
   }
 
@@ -459,42 +427,29 @@ const sucursales = [
     if (u.nombre) applyAuth(u.nombre);
   } catch {}
 
-  // REGISTRO
+  // REGISTRO ÚNICO
   const formReg = document.getElementById('form-register') as HTMLFormElement;
   if(formReg) {
     formReg.addEventListener('submit', async(e) => {
       e.preventDefault();
       const n = (document.getElementById('reg-nombre') as HTMLInputElement).value.trim();
       const btn = formReg.querySelector('button')!;
-      btn.textContent = 'AUTENTICANDO...'; btn.style.opacity = '0.5';
-      await new Promise(r => setTimeout(r, 800));
+      
+      btn.textContent = 'REGISTRANDO...'; 
+      btn.style.opacity = '0.7';
+      
+      await new Promise(r => setTimeout(r, 1000));
+      
       sessionStorage.setItem('taboada_user', JSON.stringify({ nombre: n }));
       applyAuth(n);
-      showToast('✦ Membresía Creada');
+      showToast('✦ Registro Exitoso');
     });
   }
 
-  // LOGIN
-  const formLog = document.getElementById('form-login') as HTMLFormElement;
-  if(formLog) {
-    formLog.addEventListener('submit', async(e) => {
-      e.preventDefault();
-      const email = (document.getElementById('log-correo') as HTMLInputElement).value.trim();
-      const btn = formLog.querySelector('button')!;
-      btn.textContent = 'ACCEDIENDO...'; btn.style.opacity = '0.5';
-      await new Promise(r => setTimeout(r, 800));
-      const mock = email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'Socio';
-      const cap = mock.charAt(0).toUpperCase() + mock.slice(1);
-      sessionStorage.setItem('taboada_user', JSON.stringify({ nombre: cap }));
-      applyAuth(cap);
-      showToast('✦ Acceso Concedido');
-    });
-  }
-
-  // -- REWARDS --
+  // -- REWARDS (AHORA EN TEMA CLARO) --
   function initLuxRewards() {
     let claimed = false;
-    const cards = document.querySelectorAll('.rw-card-lux');
+    const cards = document.querySelectorAll('.rw-card-light');
 
     cards.forEach(card => {
       card.addEventListener('click', () => {
@@ -505,14 +460,14 @@ const sucursales = [
         if(tag) {
           tag.textContent = 'ACTIVO'; 
           tag.style.background = 'var(--gold)'; 
-          tag.style.color = '#170902';
+          tag.style.color = '#fff';
         }
-        card.setAttribute('style', 'background:rgba(212,168,83,0.15); border:1px solid var(--gold); border-radius:16px; padding:24px; text-align:left; display:flex; align-items:center; gap:20px;');
+        card.setAttribute('style', 'background:#FDF9F5; border:2px solid var(--gold); border-radius:16px; padding:19px; text-align:left; display:flex; align-items:center; gap:20px;');
 
         cards.forEach(o => {
           if (o !== card) {
             o.classList.add('used');
-            o.setAttribute('style', 'background:transparent; border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:24px; text-align:left; display:flex; align-items:center; gap:20px; opacity:0.3; filter:grayscale(1);');
+            o.setAttribute('style', 'background:#FFFFFF; border:1px solid #EAD9C5; border-radius:16px; padding:20px; text-align:left; display:flex; align-items:center; gap:20px; opacity:0.4; filter:grayscale(1);');
             const ot = o.querySelector('.lux-claim-tag') as HTMLElement;
             if(ot) ot.style.display = 'none';
           }
