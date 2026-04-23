@@ -1,16 +1,29 @@
 ---
 import AppLayout from '../layouts/AppLayout.astro';
 
+// 1. Datos de los beneficios
 const rewards = [
-  { id:'trufa', title:'Trufa Artesanal', tag:'Regalo VIP', desc:'Una pieza maestra de cacao belga artesanal.', img:'/images/trufa-hero.png' },
-  { id:'choco', title:'Barra Pura', tag:'Exclusivo', desc:'70% cacao de origen amazónico boliviano.', img:'/images/barra-hero.png' },
-  { id:'cupon', title:'Gesto 4%', tag:'Cortesía', desc:'Descuento especial en toda nuestra colección.', img:'/images/cupon-hero.png' },
-  { id:'cupon', title:'Gesto 4%', tag:'Cortesía', desc:'Descuento especial en toda nuestra colección.', img:'/images/cupon-hero.png' },
+  { id:'trufa', title:'Trufa Artesanal', tag:'Regalo VIP', desc:'Pieza maestra de cacao belga.', img:'/images/trufa-hero.jpg' },
+  { id:'choco', title:'Barra Pura', tag:'Exclusivo', desc:'70% cacao amazónico.', img:'/images/barra-hero.jpg' },
+  { id:'cupon', title:'Gesto 4%', tag:'Cortesía', desc:'Descuento especial.', img:'/images/cupon-hero.jpg' },
 ];
 
+// 2. Datos de los combos
 const combos = [
-  { id:'c1', name:'Combo Familiar', price:'75', img:'/images/port1.png' },
-  { id:'c2', name:'Combo Goloso', price:'45', img:'/images/port1.png' },
+  { id:'c1', name:'Combo Familiar',     desc:'2 bolsas de trufas belgas + galletas + panes artesanales', price:'75', img:'/images/port1.jpg' },
+  { id:'c2', name:'Combo Goloso',       desc:'Trufas premium + galletas gourmet + pastelito artesanal', price:'45', img:'/images/port1.jpg' },
+  { id:'c3', name:'Combo Regalo FEXCO', desc:'Exclusivo surtido en elegante caja (Edición Limitada)', price:'95', img:'/images/combo_regalo.png' },
+];
+
+// 3. Datos de sucursales
+const sucursales = [
+  { ciudad: 'Cochabamba', locales: [
+    { nombre: 'Boutique La Recoleta', dir: 'Av. Potosí, Zona La Recoleta' },
+    { nombre: 'Punto Heroínas', dir: 'Calle Heroínas, Centro Histórico' }
+  ]},
+  { ciudad: 'La Paz', locales: [
+    { nombre: 'Boutique Calacoto', dir: 'Zona Calacoto, Calle 15' }
+  ]}
 ];
 ---
 
@@ -21,35 +34,38 @@ const combos = [
     --oro-viejo: #C4A77D;
     --beige-seda: #FDF5E6;
     --cafe-profundo: #1A0D0A;
-    --font-serif: "Playfair Display", serif;
+    --font-serif: "Playfair Display", serif; 
   }
 
   body { background-color: var(--cafe-profundo); color: var(--beige-seda); margin: 0; }
 
   /* ── HEADER FIJO ── */
   .fixed-header {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 12px 5%; display: flex; justify-content: space-between; align-items: center;
-    z-index: 100; background-color: rgba(26, 13, 10, 0.9);
-    border-bottom: 1px solid rgba(196, 167, 125, 0.2);
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    padding: 10px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: var(--cafe-profundo);
+    border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
-  .logo-main { height: clamp(30px, 4vw, 45px); filter: brightness(0) invert(1); }
-  .logo-fexco { height: clamp(18px, 3vw, 25px); opacity: 0.8; }
+  .logo-main { height: clamp(30px, 4vw, 45px); } 
+  .logo-fexco { height: clamp(18px, 3vw, 25px); }
 
-  /* ── SECCIÓN DE BIENVENIDA CON IMAGEN DE FONDO ── */
+  /* ── SECCIÓN DE BIENVENIDA (Fondo recuperado) ── */
   .welcome-container {
     position: relative;
     min-height: 100vh;
     padding: 120px 5% 60px;
     display: flex;
     flex-direction: column;
-    /* IMAGEN DE FONDO PORT2 */
-    background-image: 
-      linear-gradient(rgba(26, 13, 10, 0.8), rgba(26, 13, 10, 0.7)), 
-      url('/images/port2.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Efecto elegante al hacer scroll */
+    background: 
+      linear-gradient(135deg, rgba(26, 13, 10, 0.95) 0%, rgba(26, 13, 10, 0.8) 50%, rgba(26, 13, 10, 0.6) 100%),
+      url('/images/port2.jpg') center/cover no-repeat;
+    background-attachment: fixed;
   }
 
   .welcome-section {
@@ -57,6 +73,8 @@ const combos = [
     max-width: 1200px;
     margin: 0 auto 40px;
     width: 100%;
+    position: relative;
+    z-index: 2;
   }
 
   .welcome-text {
@@ -64,105 +82,190 @@ const combos = [
     font-size: clamp(1.8rem, 5vw, 2.5rem);
     color: var(--beige-seda);
     text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    line-height: 1.2;
   }
   .welcome-text span { color: var(--oro-viejo); font-style: italic; }
 
-  /* ── GRID DE BENEFICIOS ── */
-  .benefit-grid {
+  /* ── SECCIÓN DE TICKETS ── */
+  .ticket-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 40px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto 80px;
     width: 100%;
-  }
-
-  .benefit-wrapper {
     position: relative;
-    z-index: 1;
+    z-index: 10;
   }
 
-  /* Cuadrado chueco */
-  .benefit-wrapper::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: var(--oro-viejo);
-    border-radius: 20px;
-    transform: rotate(0deg);
-    transition: transform 0.4s ease, opacity 0.3s;
-    z-index: -1;
-    opacity: 0;
-  }
-
-  .benefit-wrapper:hover::before, .benefit-wrapper.selected::before {
-    transform: rotate(-4deg) scale(1.02);
-    opacity: 1;
-  }
-
-  .benefit-card {
-    background: rgba(255, 255, 255, 0.95); /* Semi transparente */
-    backdrop-filter: blur(10px); /* Efecto cristal */
-    padding: 35px;
-    border-radius: 20px;
-    text-align: center;
+  .ticket-wrapper {
+    position: relative;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.25));
     transition: transform 0.3s ease;
-    height: 100%;
+    height: fit-content;
+  }
+  .ticket-wrapper:hover { transform: scale(1.02) rotate(-1deg); }
+
+  .ticket {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-
-  .benefit-card h3 { font-family: var(--font-serif); color: var(--cafe-profundo); margin: 15px 0 5px; font-size: 1.6rem; }
-  .benefit-card p { color: #5D4037; font-size: 13.5px; line-height: 1.5; margin-bottom: 25px; }
-  .benefit-card img { max-height: 110px; margin-bottom: 10px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
-
-  .btn-claim {
-    width: 100%; padding: 14px; border-radius: 10px;
-    background: var(--cafe-profundo); color: var(--oro-viejo);
-    border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px;
-    transition: 0.3s;
-  }
-  .btn-claim:hover { background: var(--oro-viejo); color: var(--cafe-profundo); }
-
-  /* ── COMBOS SECCIÓN ── */
-  .combos-container {
-    background-color: var(--beige-seda);
-    padding: 100px 5%;
-    border-radius: 50px 50px 0 0;
-    color: var(--cafe-profundo);
+    flex-direction: row; 
+    border-radius: 20px;
+    overflow: hidden;
     position: relative;
-    z-index: 2;
   }
 
-  .combo-card {
-    background: white; border-radius: 30px; padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+  .ticket-main, .ticket-stub, .ticket-divider { transition: transform 0.5s ease-in-out, opacity 0.5s ease; }
+  .ticket-main { flex: 1; padding: 25px; display: flex; align-items: center; gap: 20px; }
+  .ticket-img { width: 90px; height: 90px; background: var(--beige-seda); border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(196, 167, 125, 0.3); }
+  .ticket-img img { max-width: 80%; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15)); }
+
+  .ticket-info { text-align: left; }
+  .ticket-tag { font-size: 10px; font-weight: 900; color: var(--oro-viejo); letter-spacing: 0.2em; text-transform: uppercase; }
+  .ticket-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--cafe-profundo); margin: 5px 0; line-height: 1.1; }
+  .ticket-desc { font-size: 12px; color: #5D4037; opacity: 0.9; margin-bottom: 8px; line-height: 1.4; }
+  .ticket-loc { font-size: 9px; font-weight: 800; color: #A88F72; letter-spacing: 0.1em; }
+
+  .ticket-divider { position: relative; display: flex; align-items: center; justify-content: center; width: 2px; }
+  .dash-line { width: 2px; height: 100%; border-left: 3px dashed #D0C3B0; }
+  .hole { position: absolute; width: 30px; height: 30px; background-color: var(--cafe-profundo); border-radius: 50%; z-index: 5; box-shadow: inset 0 3px 5px rgba(0,0,0,0.2); }
+  .hole-start { top: -15px; left: -14px; }
+  .hole-end { bottom: -15px; left: -14px; }
+
+  .ticket-stub { width: 140px; background: var(--beige-seda); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 15px; text-align: center; }
+  .stub-barcode { font-family: monospace; font-size: 20px; font-weight: 900; color: var(--cafe-profundo); opacity: 0.4; letter-spacing: -1px; margin-bottom: 10px; }
+  .stub-label { font-size: 9px; font-weight: 900; color: var(--oro-viejo); margin-bottom: 15px; letter-spacing: 0.1em; }
+
+  .btn-redeem { background: var(--cafe-profundo); color: var(--oro-viejo); border: none; padding: 10px 15px; border-radius: 8px; font-size: 11px; font-weight: 900; cursor: pointer; transition: 0.3s; letter-spacing: 0.1em; width: 100%; }
+  .btn-redeem:hover { background: var(--oro-viejo); color: var(--cafe-profundo); transform: translateY(-2px); }
+
+  .stamp-redeemed {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(4) rotate(-30deg);
+    font-family: var(--font-serif); font-size: 2.8rem; color: var(--cafe-profundo); border: 4px solid var(--cafe-profundo);
+    padding: 10px 25px; border-radius: 15px; font-weight: 900; opacity: 0; z-index: 100; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: rgba(196, 167, 125, 0.95); pointer-events: none;
   }
 
-  /* ── ADULTO MAYOR ── */
-  .senior-box {
+  /* ── LÓGICA DE JUEGO TERMINADO ── */
+  .ticket-container.juego-terminado .ticket-wrapper:not(.is-active) { display: none; }
+  .ticket-container.juego-terminado { display: flex; justify-content: center; align-items: center; }
+  .ticket-wrapper.is-active { transform: scale(1.15); z-index: 50; pointer-events: none; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ticket-wrapper.is-broken .ticket-main { transform: translateX(-25px) rotate(-4deg); opacity: 0.85; }
+  .ticket-wrapper.is-broken .ticket-stub { transform: translateX(25px) rotate(4deg); opacity: 0.85; }
+  .ticket-wrapper.is-broken .ticket-divider { opacity: 0; }
+  .ticket-wrapper.is-stamped .stamp-redeemed { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-15deg); }
+
+  /* ── SECCIÓN 3: COMBOS Y FOOTER ── */
+  .gallery-section { padding: 100px 24px; background: var(--beige-seda); text-align: center; border-radius: 50px 50px 0 0; position: relative; z-index: 2; color: var(--cafe-profundo); }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; max-width: 1200px; margin: 40px auto 80px;
+  }
+  .lux-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+  .lux-card img { max-height: 180px; width: auto; margin-bottom: 20px; }
+  .lux-card h3 { font-family: var(--font-serif); color: var(--cafe-profundo); font-size: 1.5rem; margin-bottom: 10px; }
+  .lux-card p { color: #5D4037; font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
+  .lux-price { color: var(--oro-viejo); font-weight: 800; font-size: 1.4rem; }
+
+  .footer-info {
     background: var(--cafe-profundo);
-    border: 1px solid var(--oro-viejo);
-    padding: 60px 30px;
-    border-radius: 40px;
-    text-align: center;
-    margin: 80px 0;
+    padding: 80px 24px;
     color: var(--beige-seda);
+    text-align: center;
+    border-top: 1px solid rgba(196, 167, 125, 0.2);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px; max-width: 1000px; margin: 0 auto 50px;
+  }
+  .footer-city { color: var(--oro-viejo); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; }
+  .footer-local { margin-bottom: 15px; }
+  .footer-local strong { display: block; font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 5px; }
+  .footer-local span { opacity: 0.7; font-size: 0.9rem; }
+
+  .social-links { display: flex; justify-content: center; gap: 20px; }
+  .social-links a { color: var(--oro-viejo); text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; }
+
+  /* ==========================================
+     ESTILOS DEL MODAL (FONDO BORROSO INTENSO)
+     ========================================== */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background: rgba(26, 13, 10, 0.75); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px); 
+    display: none; justify-content: center; align-items: center; z-index: 1000;
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .modal-overlay.show { opacity: 1; }
+  
+  .modal-card {
+    background: rgba(26, 13, 10, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(196, 167, 125, 0.3);
+    padding: 35px; border-radius: 20px; width: 90%; max-width: 380px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: center;
+    transform: translateY(20px); transition: transform 0.3s ease;
+  }
+  .modal-overlay.show .modal-card { transform: translateY(0); }
+
+  .modal-card h3 { font-family: var(--font-serif); color: var(--oro-viejo); font-size: 1.6rem; margin-bottom: 5px; }
+  .modal-card p { color: #D7CCC8; font-size: 13px; margin-bottom: 25px; line-height: 1.4; }
+
+  .glass-field { margin-bottom: 15px; text-align: left; }
+  .glass-field label { color: var(--oro-viejo); font-size: 9px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .glass-field input {
+    background: rgba(255, 255, 255, 0.08) !important; border: 1px solid rgba(196, 167, 125, 0.2) !important;
+    padding: 14px !important; color: #fff !important; border-radius: 8px !important; width: 100%; font-size: 14px; box-sizing: border-box;
+  }
+  .glass-field input:focus { outline: none; border-color: var(--oro-viejo) !important; }
+
+  .btn-submit-modal { 
+    width: 100%; padding: 15px; 
+    background: linear-gradient(135deg, var(--oro-viejo), #A68A64);
+    color: #1A0D0A; font-weight: 900; border: none; border-radius: 10px; 
+    cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; 
+  }
+  .btn-submit-modal:hover { opacity: 0.9; transform: translateY(-2px); }
+  
+  .btn-cancel-modal {
+    background: transparent; color: rgba(255,255,255,0.5); border: none; font-size: 11px; 
+    text-decoration: underline; cursor: pointer; margin-top: 15px; text-transform: uppercase; width: 100%;
+  }
+  .btn-cancel-modal:hover { color: white; }
+
+  /* RESPONSIVO */
+  @media (max-width: 650px) {
+    .ticket-container { grid-template-columns: 1fr; }
+    .ticket-main { padding: 15px; gap: 10px; }
+    .ticket-img { width: 60px; height: 60px; border-radius: 10px; }
+    .ticket-tag { font-size: 8px; }
+    .ticket-title { font-size: 1.2rem; margin: 3px 0; }
+    .ticket-desc { display: none; } 
+    .ticket-loc { font-size: 8px; }
+    .ticket-stub { width: 110px; padding: 15px 10px; }
+    .stub-barcode { font-size: 16px; margin-bottom: 5px; }
+    .stub-label { font-size: 8px; margin-bottom: 10px; }
+    .btn-redeem { padding: 8px 5px; font-size: 9px; }
+    .hole { width: 24px; height: 24px; }
+    .hole-start { top: -12px; left: -11px; }
+    .hole-end { bottom: -12px; left: -11px; }
+    .stamp-redeemed { font-size: 1.8rem; padding: 5px 15px; border-width: 3px; }
   }
 </style>
 
-<div class="bene-page">
-  <div class="fixed-header">
-    <img src="/images/logo-taboada.png" class="logo-main" alt="Taboada" />
-    <img src="/images/fexco-logo-secondary.png" class="logo-fexco" alt="FEXCO" />
+<div id="page-root">
+  <div class="fixed-header luxury-wrapper">
+    <img src="/images/taboada-logo.png" alt="Taboada" class="logo-main" style="height: 80px; width: auto; opacity: 0.8;" />
+    <img src="/images/fexco-logo.png" alt="FEXCO" class="logo-fexco" style="height: 40px; width: auto; opacity: 0.8;" />
   </div>
 
   <div class="welcome-container">
     <header class="welcome-section">
       <div class="welcome-text">
-        Bienvenida a la familia, <br/>
+        Bienvenido(a) a la Comunidad, <br/>
         <span>Sahian Mariné</span>
       </div>
       <p style="font-size: 15px; opacity: 0.9; margin-top: 10px; max-width: 500px;">
@@ -170,54 +273,166 @@ const combos = [
       </p>
     </header>
 
-    <section class="benefit-grid">
+    <section class="ticket-container">
       {rewards.map(r => (
-        <div class="benefit-wrapper" id={r.id}>
-          <div class="benefit-card">
-            <img src={r.img} alt={r.title} />
-            <span style="font-size: 9px; font-weight: 800; color: var(--oro-viejo); letter-spacing: 0.15em; text-transform: uppercase;">{r.tag}</span>
-            <h3>{r.title}</h3>
-            <p>{r.desc}</p>
-            <button class="btn-claim" onclick=`selectReward('${r.id}')`>Activar Regalo</button>
+        <div class="ticket-wrapper">
+          <div class="ticket" id={r.id}>
+            
+            <div class="stamp-redeemed">CANJEADO</div>
+
+            <div class="ticket-main">
+              <div class="ticket-img">
+                <img src={r.img} alt={r.title} />
+              </div>
+              <div class="ticket-info">
+                <span class="ticket-tag">{r.tag}</span>
+                <h3 class="ticket-title">{r.title}</h3>
+                <p class="ticket-desc">{r.desc}</p>
+                <div class="ticket-loc">📍 Stand FEXCO · 2026</div>
+              </div>
+            </div>
+
+            <div class="ticket-divider">
+              <div class="hole hole-start"></div>
+              <div class="dash-line"></div>
+              <div class="hole hole-end"></div>
+            </div>
+
+            <div class="ticket-stub">
+              <div class="stub-barcode">|||| || |||</div>
+              <span class="stub-label">VÁLIDO HOY</span>
+              <button class="btn-redeem" onclick={`abrirModal('${r.id}')`}>CANJEAR</button>
+            </div>
+
           </div>
         </div>
       ))}
     </section>
   </div>
 
-  <div class="combos-container">
-    <h2 style="font-family: var(--font-serif); font-size: 3rem; text-align: center; margin-bottom: 50px;">Colección <span>FEXCO</span></h2>
+  <section class="gallery-section">
+    <h2 style="font-family: var(--font-serif); font-size: 3rem; margin-bottom: 50px;">Colección <span>FEXCO</span></h2>
     
-    <div class="benefit-grid" style="padding:0; margin-bottom: 80px;">
+    <div class="gallery-grid">
       {combos.map(c => (
-        <div class="combo-card">
-          <img src={c.img} alt={c.name} style="max-height: 180px; margin-bottom: 20px;" />
-          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--cafe-profundo);">{c.name}</h3>
-          <div style="font-size: 1.6rem; font-weight: 800; color: var(--oro-viejo); margin-top: 10px;">Bs. {c.price}</div>
+        <div class="lux-card">
+          <img src={c.img} alt={c.name} />
+          <h3>{c.name}</h3>
+          <p>{c.desc}</p>
+          <div class="lux-price">Bs. {c.price}</div>
         </div>
       ))}
     </div>
 
-    <div class="senior-box">
+    <div style="background: var(--cafe-profundo); border: 1px solid var(--oro-viejo); padding: 60px 30px; border-radius: 40px; margin: 80px auto 0; max-width: 1200px; color: var(--beige-seda);">
       <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--oro-viejo); margin-bottom: 15px;">¿Tienes algún adulto mayor en tu familia?</h2>
       <p style="opacity: 0.8; font-size: 14px; max-width: 550px; margin: 0 auto; line-height: 1.6;">
         Honramos a nuestras raíces. Regístralo para obtener una membresía permanente y descuentos vitalicios en nuestras boutiques de Cochabamba y La Paz.
       </p>
-      <a href="/adulto-mayor" class="btn-senior">Registrar Familiar 🎖️</a>
+      <a href="/adulto-mayor" style="display: inline-block; padding: 15px 30px; background: var(--oro-viejo); color: var(--cafe-profundo); border-radius: 50px; font-weight: 800; text-transform: uppercase; margin-top: 20px; text-decoration: none;">Registrar Familiar 🎖️</a>
+    </div>
+  </section>
+
+  <footer class="footer-info">
+    <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 50px;">Nuestras Boutiques</h2>
+    <div class="footer-grid">
+      {sucursales.map(s => (
+        <div>
+          <div class="footer-city">{s.ciudad}</div>
+          {s.locales.map(l => (
+            <div class="footer-local">
+              <strong>{l.nombre}</strong>
+              <span>{l.dir}</span>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
 
-    <footer style="padding: 40px 0; text-align: center; color: var(--cafe-profundo); font-size: 11px; letter-spacing: 0.2em; opacity: 0.6;">
-      © 2026 CHOCOLATES TABOADA · TRADICIÓN DESDE 1903
-    </footer>
+    <div class="social-links">
+      <a href="#">FACEBOOK</a>
+      <a href="#">INSTAGRAM</a>
+      <a href="#">TIKTOK</a>
+      <a href="#">WHATSAPP</a>
+    </div>
+    
+    <p style="margin-top: 60px; font-size: 10px; opacity: 0.4; letter-spacing: 0.1em;">© 2026 CHOCOLATES TABOADA · DESDE 1903</p>
+  </footer>
+</div>
+
+<div id="modal-captacion" class="modal-overlay">
+  <div class="modal-card">
+    <h3>Verifica tu Identidad</h3>
+    <p>Para asegurar que este beneficio exclusivo llegue a tus manos, completa tus datos.</p>
+    
+    <form id="form-canje">
+      <div class="glass-field">
+        <label>Nombre</label>
+        <input type="text" id="user-nombre" required placeholder="Ej. Sahian" />
+      </div>
+      <div class="glass-field">
+        <label>Apellido</label>
+        <input type="text" id="user-apellido" required placeholder="Ej. Mariné" />
+      </div>
+      <div class="glass-field">
+        <label>Correo Electrónico</label>
+        <input type="email" id="user-email" required placeholder="sahian@email.com" />
+      </div>
+      
+      <button type="submit" class="btn-submit-modal">Confirmar y Canjear</button>
+      <button type="button" class="btn-cancel-modal" onclick="cerrarModal()">Cancelar</button>
+    </form>
   </div>
 </div>
 
 <script is:inline>
-  function selectReward(id) {
-    document.querySelectorAll('.benefit-wrapper').forEach(el => el.classList.remove('selected'));
-    const active = document.getElementById(id);
-    if(active) active.classList.add('selected');
-    alert("¡Beneficio activado! Muéstralo en caja del stand FEXCO.");
+  let ticketSeleccionado = null;
+
+  function abrirModal(id) {
+    const container = document.querySelector('.ticket-container');
+    if(container.classList.contains('juego-terminado')) return; 
+
+    ticketSeleccionado = id;
+    const modal = document.getElementById('modal-captacion');
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('show'); }, 10);
   }
+
+  function cerrarModal() {
+    const modal = document.getElementById('modal-captacion');
+    modal.classList.remove('show');
+    setTimeout(() => { modal.style.display = 'none'; }, 400);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const formCanje = document.getElementById('form-canje');
+    
+    if(formCanje) {
+      formCanje.addEventListener('submit', (e) => {
+        e.preventDefault(); 
+        
+        cerrarModal(); 
+
+        if(!ticketSeleccionado) return; 
+
+        const container = document.querySelector('.ticket-container');
+        container.classList.add('juego-terminado');
+
+        const ticketElement = document.getElementById(ticketSeleccionado);
+        if(!ticketElement) return;
+
+        const wrapper = ticketElement.closest('.ticket-wrapper');
+        const btn = ticketElement.querySelector('.btn-redeem');
+        if(btn) btn.innerText = "VALIDANDO...";
+
+        wrapper.classList.add('is-active');
+
+        setTimeout(() => { wrapper.classList.add('is-broken'); }, 800);
+        setTimeout(() => { wrapper.classList.add('is-stamped'); }, 1400);
+        setTimeout(() => { alert("¡Beneficio validado exitosamente! Muestra esta pantalla en caja."); }, 2200);
+      });
+    }
+  });
 </script>
+
 </AppLayout>
