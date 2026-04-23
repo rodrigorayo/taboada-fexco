@@ -169,7 +169,7 @@ const sucursales = [
 </div>
 <script>
   // Cambia esta variable de entorno en Vercel para que apunte a tu Backend en la nube
-  const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+  const API_URL = import.meta.env.PUBLIC_API_URL || 'https://api-taboada-backend.onrender.com/api/v1';
 
   const form = document.getElementById('form-registro');
   form?.addEventListener('submit', async (e) => {
