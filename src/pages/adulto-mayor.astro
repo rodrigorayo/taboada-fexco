@@ -188,17 +188,28 @@ import AppLayout from '../layouts/AppLayout.astro';
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
       VOLVER
     </a>
-    <img src="/images/logo-taboada.png" class="topbar-logo" alt="Taboada" />
+    <img 
+      src="/images/taboada-logo.png" 
+      alt="Taboada" 
+      class="logo-main" 
+      style="height: clamp(60px, 8vw, 100px); width: auto;" 
+    />  
   </header>
 
   <section class="am-hero">
     <div class="am-hero-inner">
       <span class="hero-tag">Programa Legado</span>
       <h1 class="hero-title">Credencial de Honor para <span>Adultos Mayores</span></h1>
-      <p style="color: var(--beige-seda); opacity: 0.7; font-size: 16px; line-height: 1.6;">
-        Otorgamos un descuento vitalicio del 5% en nuestra sucursal de La Recoleta. <br/>
-        Regístralo ahora y genera su credencial digital al instante.
-      </p>
+<p style="color: var(--beige-seda); opacity: 0.7; font-size: 16px; line-height: 1.6;">
+    Otorgamos un descuento vitalicio del 5% en nuestra sucursal de 
+        La Recoleta
+    </a>. 
+    <br/>
+    Regístralo ahora y recógelo en nuestra sucursal de 
+    <a href="https://n9.cl/cg9lw" target="_blank" rel="noopener noreferrer" style="color: var(--oro-viejo); text-decoration: underline; font-weight: 600;">
+        La Recoleta
+    </a>.
+</p>
     </div>
   </section>
 
@@ -214,19 +225,26 @@ import AppLayout from '../layouts/AppLayout.astro';
             <label>Apellidos</label>
             <input type="text" id="am-apellido" placeholder="Ej. Pérez" required />
           </div>
+          <div class="field-group">
+            <label>Parentesco</label>
+            <input type="text" id="am-parentezco" placeholder="Ej. Hijo(a)" required />
+          </div>
         </div>
         
         <div class="field-group">
           <label>Fecha de nacimiento</label>
           <input type="date" id="am-fecha" required />
         </div>
-
-        <div class="field-group">
-          <label>Número de WhatsApp (Notificación)</label>
-          <input type="tel" id="am-tel" placeholder="Ej. 70000000" required />
-        </div>
-
-        <button type="submit" class="btn-submit" id="submit-btn">Generar Credencial 🎖️</button>
+        <div style="text-align: center; margin-top: 30px;">
+  <button type="submit" class="btn-submit" id="submit-btn" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%;">
+    <span>GENERAR CÓDIGO Y VISITAR RECOLETA</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+  </button>
+  
+  <p style="margin-top: 15px; font-size: 11px; color: #5D4037; font-style: italic;">
+    * Presentate con el codigo generado para validar tu beneficio.
+  </p>
+</div>
       </form>
     </div>
   </main>
