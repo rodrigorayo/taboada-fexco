@@ -401,10 +401,22 @@ const sucursales = [
   </div>
 </div>
 
-<script is:inline>
+<script>
+  const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+
   let ticketSeleccionado = null;
 
-  function abrirModal(id) {
+  // Mapa para conectar los IDs del Frontend con el Enum del Backend Python
+  const PREMIO_MAP = {
+    'trufa': 'TRUFA_CHOCOLATE',
+    'choco': 'CHOCOLATE',
+    'cupon2': 'DESCUENTO_2_MES',
+    'choco3': 'DESCUENTO_3_2SEMANAS',
+    'cupon4': 'DESCUENTO_4_1SEMANA'
+  };
+
+  // Hacer las funciones globales para que funcionen con onClick en Astro
+  window.abrirModal = function(id) {
     const container = document.querySelector('.ticket-container');
     if(container.classList.contains('juego-terminado')) return; 
 
@@ -412,39 +424,94 @@ const sucursales = [
     const modal = document.getElementById('modal-captacion');
     modal.style.display = 'flex';
     setTimeout(() => { modal.classList.add('show'); }, 10);
-  }
+  };
 
-  function cerrarModal() {
+  window.cerrarModal = function() {
     const modal = document.getElementById('modal-captacion');
     modal.classList.remove('show');
     setTimeout(() => { modal.style.display = 'none'; }, 400);
-  }
+  };
 
   document.addEventListener('DOMContentLoaded', () => {
+    // 1. Verificación de Seguridad
+    const userStr = sessionStorage.getItem('taboada_user');
+    if (!userStr) {
+      window.location.href = '/'; // Si intentan saltarse el paso del número
+      return;
+    }
+    const user = JSON.parse(userStr);
+
+    // Si ya reclamó antes, bloqueamos la pantalla
+    if (user.ha_reclamado) {
+      const container = document.querySelector('.ticket-container');
+      container.classList.add('juego-terminado');
+      alert("Tu número de WhatsApp ya reclamó un premio anteriormente. ¡Disfruta la feria!");
+    }
+
     const formCanje = document.getElementById('form-canje');
     
     if(formCanje) {
-      formCanje.addEventListener('submit', (e) => {
+      formCanje.addEventListener('submit', async (e) => {
         e.preventDefault(); 
-        cerrarModal(); 
-
+        
         if(!ticketSeleccionado) return; 
 
-        const container = document.querySelector('.ticket-container');
-        container.classList.add('juego-terminado');
+        const nombre = document.getElementById('user-nombre').value;
+        const apellido = document.getElementById('user-apellido').value;
+        const email = document.getElementById('user-email').value;
+        
+        const btnSubmit = formCanje.querySelector('.btn-submit-modal');
+        btnSubmit.innerText = "Procesando...";
+        btnSubmit.disabled = true;
 
-        const ticketElement = document.getElementById(ticketSeleccionado);
-        if(!ticketElement) return;
+        try {
+          // 2. Mandar los datos al Backend (SalesSystem)
+          const res = await fetch(`${API_URL}/comunidad/claim`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              telefono: user.whatsapp,
+              nombre: nombre,
+              apellido: apellido,
+              email: email,
+              premio: PREMIO_MAP[ticketSeleccionado] || 'TRUFA_CHOCOLATE'
+            })
+          });
 
-        const wrapper = ticketElement.closest('.ticket-wrapper');
-        const btn = ticketElement.querySelector('.btn-redeem');
-        if(btn) btn.innerText = "VALIDANDO...";
+          const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.detail || "Error al reclamar");
+          }
 
-        wrapper.classList.add('is-active');
+          // 3. Actualizar la sesión local
+          user.ha_reclamado = true;
+          sessionStorage.setItem('taboada_user', JSON.stringify(user));
 
-        setTimeout(() => { wrapper.classList.add('is-broken'); }, 800);
-        setTimeout(() => { wrapper.classList.add('is-stamped'); }, 1400);
-        setTimeout(() => { alert("¡Beneficio validado exitosamente! Muestra esta pantalla en caja."); }, 2200);
+          // 4. Cerrar y animar el regalo
+          window.cerrarModal(); 
+
+          const container = document.querySelector('.ticket-container');
+          container.classList.add('juego-terminado');
+
+          const ticketElement = document.getElementById(ticketSeleccionado);
+          if(!ticketElement) return;
+
+          const wrapper = ticketElement.closest('.ticket-wrapper');
+          const btn = ticketElement.querySelector('.btn-redeem');
+          if(btn) btn.innerText = "VALIDADO ✓";
+
+          wrapper.classList.add('is-active');
+
+          setTimeout(() => { wrapper.classList.add('is-broken'); }, 800);
+          setTimeout(() => { wrapper.classList.add('is-stamped'); }, 1400);
+          setTimeout(() => { alert("¡Beneficio validado exitosamente en el sistema! Muestra esta pantalla en caja."); }, 2200);
+
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Ocurrió un error. Por favor intenta de nuevo.");
+          btnSubmit.innerText = "Confirmar y Canjear";
+          btnSubmit.disabled = false;
+        }
       });
     }
   });

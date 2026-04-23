@@ -167,14 +167,53 @@ const sucursales = [
     </div>
   </section>
 </div>
-<script is:inline>
+<script>
+  // Cambia esta variable de entorno en Vercel para que apunte a tu Backend en la nube
+  const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+
   const form = document.getElementById('form-registro');
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const wppInput = document.getElementById('reg-wpp');
     const whatsapp = wppInput ? wppInput.value : '';
-    sessionStorage.setItem('taboada_user', JSON.stringify({ whatsapp: whatsapp }));
-    window.location.href = '/beneficios';
+    
+    if(!whatsapp) return;
+
+    const btn = form.querySelector('button');
+    if(btn) {
+      btn.innerText = "Conectando...";
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+    }
+
+    try {
+      // 1. Guardar o verificar en el Sistema Central (Backend Python)
+      const res = await fetch(`${API_URL}/comunidad/check-phone/${whatsapp}`);
+      
+      if (!res.ok) {
+        throw new Error("Error en el backend");
+      }
+      
+      const data = await res.json();
+
+      // 2. Guardar en la sesión temporal para la siguiente página
+      sessionStorage.setItem('taboada_user', JSON.stringify({ 
+        whatsapp: whatsapp,
+        ha_reclamado: data.ha_reclamado
+      }));
+
+      // 3. Redirigir
+      window.location.href = '/beneficios';
+
+    } catch (err) {
+      console.error(err);
+      alert("No pudimos conectar con el servidor central. Intenta de nuevo.");
+      if(btn) {
+        btn.innerText = "Quiero mi regalo de bienvenida ✦";
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    }
   });
 </script>
 </AppLayout>
