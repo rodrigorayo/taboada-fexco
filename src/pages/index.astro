@@ -30,7 +30,7 @@ const sucursales = [
     --font-serif: "Playfair Display", serif; 
   }
 
-  /* ── Barra de Logos Fija con Fondo Café Permanente ── */
+  /* ── Barra de Logos Fija ── */
   .fixed-header {
     position: fixed;
     top: 0; left: 0; width: 100%;
@@ -46,16 +46,10 @@ const sucursales = [
   }
   .fixed-header img { pointer-events: auto; }
   
-  /* CORREGIDO: Se eliminó el filter para mantener el color original de Taboada */
-  .logo-main { height: clamp(30px, 4vw, 45px); } 
-  
-  /* CORREGIDO: Se eliminó el opacity para mantener el color original vibrante de FEXCO */
-  .logo-fexco { height: clamp(18px, 3vw, 25px); }
-
-  /* ── SECCIÓN 1: HERO & REGISTRO (TOP) ── */
+  /* ── SECCIÓN 1: HERO & REGISTRO ── */
   .hero-landing {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     background-color: var(--cafe-profundo);
@@ -73,7 +67,7 @@ const sucursales = [
   .hero-inner {
     position: relative; z-index: 2;
     max-width: 1200px; margin: 0 auto;
-    padding: 100px 24px 0;
+    padding: 100px 24px 40px;
     display: grid; grid-template-columns: 1fr;
     gap: 30px; width: 100%;
     align-items: center;
@@ -85,14 +79,15 @@ const sucursales = [
 
   .hero-title {
     font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 7vw, 4rem);
+    /* AJUSTE DINÁMICO: 2.2rem en cel, hasta 4rem en PC */
+    font-size: clamp(2.2rem, 8vw, 4rem); 
     color: var(--beige-seda); line-height: 1.1; margin-bottom: 15px;
   }
   .hero-title span { font-style: italic; font-weight: 400; color: #E0C9A6; }
 
   .hero-desc {
     color: rgba(253, 245, 230, 0.85); max-width: 480px; 
-    font-size: clamp(14px, 3vw, 17px); line-height: 1.5;
+    font-size: clamp(14px, 4vw, 17px); line-height: 1.5;
   }
 
   .form-card {
@@ -100,7 +95,7 @@ const sucursales = [
     backdrop-filter: blur(12px);
     border: 1px solid rgba(196, 167, 125, 0.3);
     border-radius: 20px;
-    padding: 25px;
+    padding: clamp(20px, 5vw, 30px);
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
 
@@ -119,68 +114,48 @@ const sucursales = [
     color: #1A0D0A; font-weight: 900; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase;
     margin-top: 10px;
   }
-
-  /* ── SECCIÓN 2: COMBOS (DESPUÉS DEL HERO) ── */
-  .gallery-section { padding: 100px 24px; background: var(--beige-seda); text-align: center; }
-  .gallery-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px; max-width: 1200px; margin: 40px auto 0;
+  /* AJUSTES ESPECÍFICOS PARA CELULAR */
+  @media (max-width: 600px) {
+    .hero-inner { padding-top: 80px; text-align: center; }
+    .hero-desc { margin: 0 auto 20px; }
+    .fixed-header { padding: 8px 4%; }
   }
-  .lux-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
-  .lux-card img { max-height: 180px; width: auto; margin-bottom: 20px; }
-  .lux-card h3 { font-family: var(--font-serif); color: var(--cafe-profundo); font-size: 1.5rem; margin-bottom: 10px; }
-  .lux-card p { color: #5D4037; font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
-  .lux-price { color: var(--oro-viejo); font-weight: 800; font-size: 1.4rem; }
-
-  /* ── SECCIÓN 3: DIRECCIONES (FOOTER) ── */
-  .footer-info {
-    background: var(--cafe-profundo);
-    padding: 80px 24px;
-    color: var(--beige-seda);
-    text-align: center;
-    border-top: 1px solid rgba(196, 167, 125, 0.2);
-  }
-  .footer-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px; max-width: 1000px; margin: 0 auto 50px;
-  }
-  .footer-city { color: var(--oro-viejo); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; }
-  .footer-local { margin-bottom: 15px; }
-  .footer-local strong { display: block; font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 5px; }
-  .footer-local span { opacity: 0.7; font-size: 0.9rem; }
-
-  .social-links { display: flex; justify-content: center; gap: 20px; }
-  .social-links a { color: var(--oro-viejo); text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; }
 </style>
-
 <div id="page-root">
-<div class="fixed-header luxury-wrapper">
-  <img src="/images/taboada-logo.png" alt="Taboada" class="logo-main" style="height: 80px; width: auto;" />
-  <img src="/images/fexco-logo.png" alt="FEXCO" class="logo-fexco" style="height: 40px; width: auto;" />
-</div>
-
+  <div class="fixed-header luxury-wrapper">
+    <img 
+      src="/images/taboada-logo.png" 
+      alt="Taboada" 
+      class="logo-main" 
+      style="height: clamp(60px, 8vw, 160px); width: auto;" 
+    />  
+    <img 
+      src="/images/fexco-logo.png" 
+      alt="FEXCO" 
+      class="logo-fexco" 
+      style="height: clamp(20px, 5vw, 35px); width: auto;" 
+    />
+  </div>
   <section class="hero-landing">
     <div class="hero-bg"></div>
     <div class="hero-inner">
 <div class="hero-content">
-  <span style="color: var(--oro-viejo); font-weight: 700; letter-spacing: 0.2em; font-size: 16px; text-transform: uppercase;">Orgullo Boliviano en FEXCO</span>
-  
+  <span style="color: var(--oro-viejo); font-weight: 700; letter-spacing: 0.2em; font-size: clamp(12px, 3vw, 16px); text-transform: uppercase;">
+    Orgullo Boliviano en FEXCO
+  </span>
   <h1 class="hero-title">
-    <span style="font-size: 3.8rem; color: var(--beige-seda); font-style: normal; font-weight: 400; display: block; line-height: 1.2; margin-bottom: 5px;">
+    <span style="font-size: clamp(2rem, 5vw, 1.8rem); color: var(--beige-seda); font-style: normal; font-weight: 400; display: block; line-height: 1.2; margin-bottom: 5px;">
       Se parte del sabor de
     </span>
     <span>Nuestra Historia</span>
   </h1>
-  
-  <p class="hero-desc">
+  <p class="hero-desc" style="font-size: clamp(8px, 4vw, 17px); line-height: 1.4; color: rgba(253, 245, 230, 0.85); max-width: 480px;">
     Somos la primera fábrica de chocolates de Bolivia. Llevamos generaciones perfeccionando una receta familiar para ofrecerte el chocolate más exquisito.
   </p>
 </div>
-
       <div class="form-card">
         <h2>Se parte de la Comunidad</h2>
         <p>Regístrate ahora y recibe regalos pensados para ti.</p>
-        
         <form id="form-registro">
           <div class="glass-field">
             <label>Número de WhatsApp</label>
@@ -192,20 +167,13 @@ const sucursales = [
     </div>
   </section>
 </div>
-
-<script>
-  // CORREGIDO: El script ahora busca correctamente solo el número de WhatsApp
+<script is:inline>
   const form = document.getElementById('form-registro');
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    const wppInput = document.getElementById('reg-wpp') as HTMLInputElement;
+    const wppInput = document.getElementById('reg-wpp');
     const whatsapp = wppInput ? wppInput.value : '';
-    
-    // Guardamos el WhatsApp en la sesión para simular el registro
     sessionStorage.setItem('taboada_user', JSON.stringify({ whatsapp: whatsapp }));
-    
-    // Redirigimos a la página de beneficios
     window.location.href = '/beneficios';
   });
 </script>
