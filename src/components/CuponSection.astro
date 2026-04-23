@@ -1,7 +1,4 @@
----
-// Coupon/Registration section
----
-
+<!-- CuponSection.astro -->
 <section id="registro" class="relative bg-[#3B1A0A] py-20">
   <div class="max-w-5xl mx-auto px-6 text-center reveal">
 
@@ -13,60 +10,204 @@
     </div>
 
     <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', Georgia, serif;">
-      ¿Ya tienes tu <span class="text-[#D4A853]">cupón</span>?
+      Reclama tu <span class="text-[#D4A853]">Beneficio FEXCO</span>
     </h2>
-    <p class="text-[#F5E9D4] text-lg mb-10 max-w-xl mx-auto opacity-90">
-      Regístrate con tu número de WhatsApp y recibe un cupón de descuento exclusivo para 
-      canjear en nuestro stand de FEXCO 2026.
+    <p class="text-[#F5E9D4] text-lg mb-10 max-w-xl mx-auto opacity-90" id="step-description">
+      Ingresa tu número de WhatsApp para verificar tu participación.
     </p>
 
-    <!-- Registration form -->
-    <form id="registro-form" class="max-w-md mx-auto" onsubmit="handleRegistro(event)">
-      <div class="flex flex-col sm:flex-row gap-3">
-        <div class="flex-1 relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#C4854A]">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-          </span>
-          <input
-            type="tel"
-            id="whatsapp-input"
-            name="whatsapp"
-            placeholder="+591 7XXXXXXX"
-            required
-            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#D4A853] focus:bg-white/15 transition-all duration-300 backdrop-blur-sm"
-          />
+    <div class="max-w-md mx-auto relative">
+        <!-- Error Message -->
+        <div id="error-message" class="hidden mb-4 bg-red-500/20 border border-red-500/50 text-red-200 text-sm py-3 px-4 rounded-xl text-left">
         </div>
-        <button
-          type="submit"
-          id="registro-submit"
-          class="bg-[#D4A853] hover:bg-[#F0C878] text-[#3B1A0A] font-bold px-7 py-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap"
-        >
-          Enviar Cupón →
-        </button>
-      </div>
-      <p class="text-white/40 text-xs mt-3">
-        Solo para asistentes a FEXCO 2026. Un cupón por número.
-      </p>
-    </form>
 
-    <!-- Success message (hidden) -->
-    <div id="registro-success" class="hidden mt-6 bg-[#D4A853]/20 border border-[#D4A853]/40 rounded-2xl p-6 text-center">
-      <div class="text-4xl mb-2">🎉</div>
-      <p class="text-[#D4A853] font-bold text-lg">¡Registro exitoso!</p>
-      <p class="text-white/70 text-sm mt-1">Recibirás tu cupón por WhatsApp en breve. ¡Nos vemos en FEXCO!</p>
+        <!-- STEP 1: Phone Check -->
+        <form id="step1-form" class="flex flex-col gap-3 transition-all duration-300">
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#C4854A]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+                    </svg>
+                </span>
+                <input
+                    type="tel"
+                    id="whatsapp-input"
+                    placeholder="Ej: 71234567"
+                    required
+                    class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#D4A853] focus:bg-white/15 transition-all duration-300"
+                />
+            </div>
+            <button
+                type="submit"
+                id="btn-verificar"
+                class="w-full bg-[#D4A853] hover:bg-[#F0C878] text-[#3B1A0A] font-bold px-7 py-4 rounded-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                Verificar Número
+            </button>
+        </form>
+
+        <!-- STEP 2: Claim Form (Hidden Initially) -->
+        <form id="step2-form" class="hidden flex flex-col gap-4 transition-all duration-300 text-left">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-[#F5E9D4] text-xs font-semibold ml-2 mb-1 block">Nombre *</label>
+                    <input type="text" id="nombre-input" required class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#D4A853]" />
+                </div>
+                <div>
+                    <label class="text-[#F5E9D4] text-xs font-semibold ml-2 mb-1 block">Apellido *</label>
+                    <input type="text" id="apellido-input" required class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#D4A853]" />
+                </div>
+            </div>
+            
+            <div>
+                <label class="text-[#F5E9D4] text-xs font-semibold ml-2 mb-1 block">Correo Electrónico (Opcional)</label>
+                <input type="email" id="email-input" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#D4A853]" />
+            </div>
+
+            <div class="mt-2">
+                <label class="text-[#D4A853] text-sm font-bold mb-3 block">Elige tu beneficio exclusivo:</label>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                        <input type="radio" name="premio" value="TRUFA_CHOCOLATE" required class="w-4 h-4 text-[#D4A853] accent-[#D4A853]" />
+                        <span class="text-white text-sm">Trufa de Chocolate (Inmediato)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                        <input type="radio" name="premio" value="CHOCOLATE" class="w-4 h-4 text-[#D4A853] accent-[#D4A853]" />
+                        <span class="text-white text-sm">Tableta de Chocolate (Inmediato)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                        <input type="radio" name="premio" value="DESCUENTO_2_MES" class="w-4 h-4 text-[#D4A853] accent-[#D4A853]" />
+                        <span class="text-white text-sm">2% de descuento durante 1 Mes</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                        <input type="radio" name="premio" value="DESCUENTO_3_2SEMANAS" class="w-4 h-4 text-[#D4A853] accent-[#D4A853]" />
+                        <span class="text-white text-sm">3% de descuento durante 2 Semanas</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                        <input type="radio" name="premio" value="DESCUENTO_4_1SEMANA" class="w-4 h-4 text-[#D4A853] accent-[#D4A853]" />
+                        <span class="text-white text-sm">4% de descuento durante 1 Semana</span>
+                    </label>
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                id="btn-reclamar"
+                class="w-full bg-[#D4A853] hover:bg-[#F0C878] text-[#3B1A0A] font-bold px-7 py-4 rounded-2xl transition-all mt-2"
+            >
+                Reclamar Ahora
+            </button>
+        </form>
+
+        <!-- STEP 3: Success Message -->
+        <div id="step3-success" class="hidden bg-[#D4A853]/20 border border-[#D4A853]/40 rounded-2xl p-8 text-center">
+            <div class="text-5xl mb-4">🎉</div>
+            <p class="text-[#D4A853] font-black text-2xl mb-2">¡Reclamo exitoso!</p>
+            <p class="text-white/80 text-sm mt-1" id="success-text">Acércate al staff en el stand para validar tu premio. ¡Te esperamos!</p>
+        </div>
     </div>
   </div>
 </section>
 
 <script>
-  function handleRegistro(e: Event) {
-    e.preventDefault();
-    const form = document.getElementById('registro-form') as HTMLElement;
-    const success = document.getElementById('registro-success') as HTMLElement;
-    form.classList.add('hidden');
-    success.classList.remove('hidden');
-  }
-  (window as any).handleRegistro = handleRegistro;
+    const API_URL = "https://api-taboada-backend.onrender.com/api/v1/comunidad";
+    
+    const step1Form = document.getElementById('step1-form') as HTMLFormElement;
+    const step2Form = document.getElementById('step2-form') as HTMLFormElement;
+    const step3Success = document.getElementById('step3-success') as HTMLElement;
+    const errorMessage = document.getElementById('error-message') as HTMLElement;
+    const stepDesc = document.getElementById('step-description') as HTMLElement;
+    const phoneInput = document.getElementById('whatsapp-input') as HTMLInputElement;
+
+    let telefonoValidado = "";
+
+    function showError(msg: string) {
+        errorMessage.textContent = msg;
+        errorMessage.classList.remove('hidden');
+    }
+    function hideError() {
+        errorMessage.classList.add('hidden');
+    }
+
+    // Registrar visita al cargar
+    fetch(`${API_URL}/visita`, { method: "POST" }).catch(()=> {});
+
+    // Paso 1: Verificar Teléfono
+    step1Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+        const tel = phoneInput.value.trim();
+        if(!tel) return;
+
+        const btn = document.getElementById('btn-verificar') as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = "Verificando...";
+
+        try {
+            const res = await fetch(`${API_URL}/check-phone/${tel}`);
+            if (!res.ok) throw new Error("Error de conexión");
+            
+            const data = await res.json();
+
+            if (data.ha_reclamado) {
+                // Ya participó
+                step1Form.classList.add('hidden');
+                step3Success.classList.remove('hidden');
+                document.querySelector('#step3-success p.text-2xl')!.textContent = "¡Ya tienes un beneficio!";
+                document.getElementById('success-text')!.innerHTML = `Ya reclamaste: <strong>${data.premio_reclamado.replace(/_/g, ' ')}</strong>.<br/>Un ejecutivo te contactará pronto.`;
+            } else {
+                // No ha participado, pasar al formulario
+                telefonoValidado = tel;
+                step1Form.classList.add('hidden');
+                step2Form.classList.remove('hidden');
+                stepDesc.textContent = "Casi listo. Completa tus datos y elige tu beneficio.";
+            }
+        } catch (error) {
+            showError("Hubo un error conectando al servidor. Intenta de nuevo.");
+        } finally {
+            btn.disabled = false;
+            btn.textContent = "Verificar Número";
+        }
+    });
+
+    // Paso 2: Reclamar Beneficio
+    step2Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const btn = document.getElementById('btn-reclamar') as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = "Procesando...";
+
+        const payload = {
+            telefono: telefonoValidado,
+            nombre: (document.getElementById('nombre-input') as HTMLInputElement).value.trim(),
+            apellido: (document.getElementById('apellido-input') as HTMLInputElement).value.trim(),
+            email: (document.getElementById('email-input') as HTMLInputElement).value.trim() || undefined,
+            premio: (document.querySelector('input[name="premio"]:checked') as HTMLInputElement)?.value
+        };
+
+        try {
+            const res = await fetch(`${API_URL}/claim`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.detail || "Error al reclamar el premio");
+            }
+
+            // Éxito
+            step2Form.classList.add('hidden');
+            stepDesc.classList.add('hidden');
+            step3Success.classList.remove('hidden');
+
+        } catch (error: any) {
+            showError(error.message);
+            btn.disabled = false;
+            btn.textContent = "Reclamar Ahora";
+        }
+    });
 </script>
