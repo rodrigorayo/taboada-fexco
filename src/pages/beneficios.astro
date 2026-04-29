@@ -100,7 +100,7 @@ const sucursales = [
   .welcome-container {
     position: relative;
     min-height: 100vh;
-    padding: 120px 5% 60px;
+    padding: 180px 5% 60px;
     display: flex;
     flex-direction: column;
     background: 
@@ -197,11 +197,30 @@ const sucursales = [
   /* ── ANIMACIONES DE JUEGO ── */
   .ticket-container.juego-terminado .ticket-wrapper:not(.is-active) { display: none; }
   .ticket-container.juego-terminado { display: flex; justify-content: center; align-items: center; }
-  .ticket-wrapper.is-active { transform: scale(1.15); z-index: 50; pointer-events: none; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .ticket-wrapper.is-broken .ticket-main { transform: translateX(-25px) rotate(-4deg); opacity: 0.85; }
-  .ticket-wrapper.is-broken .ticket-stub { transform: translateX(25px) rotate(4deg); opacity: 0.85; }
+  .ticket-wrapper.is-active { transform: scale(1.1) translateY(-20px); z-index: 50; pointer-events: none; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ticket-wrapper.is-broken .ticket-main { transform: translateX(-150px) rotate(-15deg); opacity: 0; filter: blur(5px); transition: all 1.2s ease-in; }
+  .ticket-wrapper.is-broken .ticket-stub { transform: translateX(150px) rotate(15deg); opacity: 0; filter: blur(5px); transition: all 1.2s ease-in; }
   .ticket-wrapper.is-broken .ticket-divider { opacity: 0; }
-  .ticket-wrapper.is-stamped .stamp-redeemed { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-15deg); }
+  .ticket-wrapper.is-stamped .stamp-redeemed { 
+    opacity: 1; 
+    transform: translate(-50%, -50%) scale(1.2) rotate(-10deg);
+    box-shadow: 0 0 50px rgba(196, 167, 125, 0.5);
+  }
+
+  /* ── MENSAJE DE ÉXITO POST-CANJE ── */
+  #success-message {
+    display: none;
+    text-align: center;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(196, 167, 125, 0.1);
+    border: 1px solid var(--oro-viejo);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-out forwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ── SECCIONES ADICIONALES ── */
   .gallery-section { padding: 100px 24px; background: var(--beige-seda); text-align: center; border-radius: 50px 50px 0 0; position: relative; z-index: 2; color: var(--cafe-profundo); }
@@ -278,7 +297,7 @@ const sucursales = [
       src="/images/fexco-logo.png" 
       alt="FEXCO" 
       class="logo-fexco" 
-      style="height: clamp(20px, 5vw, 35px); width: auto;" 
+      style="height: clamp(35px, 7vw, 55px); width: auto;" 
     />
   </div>
 
@@ -294,6 +313,14 @@ const sucursales = [
   </a>
 </p>
     </header>
+
+    <div id="success-message">
+      <h2 style="font-family: var(--font-serif); color: var(--oro-viejo); font-size: 2rem; margin-bottom: 10px;">¡Canje Exitoso!</h2>
+      <p style="color: var(--beige-seda); font-size: 1.1rem; line-height: 1.4;">
+        Has reclamado tu <strong id="claimed-prize-name" style="color: var(--oro-viejo);"></strong>. 
+        Muestra esta pantalla en caja de la sucursal <strong>La Recoleta</strong> para hacerlo efectivo.
+      </p>
+    </div>
 
     <section class="ticket-container">
       {rewards.map(r => (
@@ -543,6 +570,15 @@ const sucursales = [
           setTimeout(() => { 
             const p = document.getElementById('success-prize');
             if(p) p.innerText = premioNombre;
+            
+            // Mostrar mensaje en la página principal
+            const msgArea = document.getElementById('success-message');
+            const nameSpan = document.getElementById('claimed-prize-name');
+            if(msgArea && nameSpan) {
+              msgArea.style.display = 'block';
+              nameSpan.innerText = premioNombre;
+            }
+
             const modalS = document.getElementById('modal-success');
             modalS.style.display = 'flex';
             setTimeout(() => { modalS.classList.add('show'); }, 10);
