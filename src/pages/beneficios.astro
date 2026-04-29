@@ -531,11 +531,45 @@ const sucursales = [
     }
     const user = JSON.parse(userStr);
 
-    // Si ya reclamó antes, bloqueamos la pantalla
+    // Si ya reclamó antes, bloqueamos la pantalla y mostramos SU premio
     if (user.ha_reclamado) {
       const container = document.querySelector('.ticket-container');
       container.classList.add('juego-terminado');
-      if(window.showToast) window.showToast("Tu número ya reclamó un premio anteriormente.", "🛡️");
+      
+      if(window.showToast) window.showToast("Ya reclamaste un premio anteriormente.", "🛡️");
+
+      // Buscar cuál fue el premio
+      const backendEnum = user.premio_reclamado;
+      let frontendId = null;
+      for (const [key, value] of Object.entries(PREMIO_MAP)) {
+        if (value === backendEnum) {
+          frontendId = key;
+          break;
+        }
+      }
+
+      if (frontendId) {
+        const ticketElement = document.getElementById(frontendId);
+        if (ticketElement) {
+          const wrapper = ticketElement.closest('.ticket-wrapper');
+          const btn = ticketElement.querySelector('.btn-redeem');
+          const premioNombre = ticketElement.querySelector('.ticket-title').innerText;
+          
+          wrapper.classList.add('is-active', 'is-stamped');
+          if(btn) {
+            btn.innerText = "VALIDADO ✓";
+            btn.disabled = true;
+          }
+
+          // Mostrar mensaje de éxito superior
+          const msgArea = document.getElementById('success-message');
+          const nameSpan = document.getElementById('claimed-prize-name');
+          if(msgArea && nameSpan) {
+            msgArea.style.display = 'block';
+            nameSpan.innerText = premioNombre;
+          }
+        }
+      }
     }
 
     const formCanje = document.getElementById('form-canje');

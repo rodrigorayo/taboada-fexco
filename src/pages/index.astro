@@ -199,7 +199,8 @@ const sucursales = [
       // 2. Guardar en la sesión temporal para la siguiente página
       sessionStorage.setItem('taboada_user', JSON.stringify({ 
         whatsapp: whatsapp,
-        ha_reclamado: data.ha_reclamado
+        ha_reclamado: data.ha_reclamado,
+        premio_reclamado: data.premio_reclamado
       }));
 
       // 3. Redirigir
