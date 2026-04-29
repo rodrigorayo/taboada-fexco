@@ -100,13 +100,19 @@ const sucursales = [
   .welcome-container {
     position: relative;
     min-height: 100vh;
-    padding: clamp(100px, 15vh, 160px) 5% 60px;
+    padding: 180px 5% 60px;
     display: flex;
     flex-direction: column;
     background: 
       linear-gradient(135deg, rgba(26, 13, 10, 0.95) 0%, rgba(26, 13, 10, 0.8) 50%, rgba(26, 13, 10, 0.6) 100%),
       url('/images/port2.jpg') center/cover no-repeat;
     background-attachment: fixed;
+  }
+
+  @media (max-width: 600px) {
+    .welcome-container {
+      padding: 100px 5% 40px;
+    }
   }
 
   .welcome-section {
