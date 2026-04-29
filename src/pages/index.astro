@@ -133,7 +133,7 @@ const sucursales = [
       src="/images/fexco-logo.png" 
       alt="FEXCO" 
       class="logo-fexco" 
-      style="height: clamp(20px, 5vw, 35px); width: auto;" 
+      style="height: clamp(35px, 7vw, 55px); width: auto;" 
     />
   </div>
   <section class="hero-landing">
@@ -207,7 +207,11 @@ const sucursales = [
 
     } catch (err) {
       console.error(err);
-      alert("No pudimos conectar con el servidor central. Intenta de nuevo.");
+      if(window.showToast) {
+        window.showToast("No pudimos conectar con el servidor central.", "📡");
+      } else {
+        alert("No pudimos conectar con el servidor central. Intenta de nuevo.");
+      }
       if(btn) {
         btn.innerText = "Quiero mi regalo de bienvenida ✦";
         btn.disabled = false;
